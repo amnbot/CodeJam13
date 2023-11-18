@@ -10,6 +10,7 @@ import {
   arrayRemove,
   doc,
   Timestamp,
+  getDocs,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -21,6 +22,16 @@ export const getExam = async (id) => {
   const docRef = doc(db, "exams", id);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
+};
+
+export const getAllExams = async () => {
+  const querySnapshot = await getDocs(collection(db, "exams"));
+  const docs = [];
+  querySnapshot.forEach((doc) => {
+    docs.push(doc.data());
+  });
+
+  return docs;
 };
 
 export const updateExamName = async (id, newName) => {
@@ -44,12 +55,12 @@ export const addExamQuestions = async (id, newQ) => {
 
 export const removeExamQuestions = async (id, oldQ) => {
   const docRef = doc(db, "exams", id);
-  
 
   await updateDoc(docRef, { questions: arrayRemove(oldQ) });
 };
 
 export const createUser = async (user) => {
+  console.log("user", user);
   const userRef = await addDoc(collection(db, "users"), user);
   return userRef.id;
 };
