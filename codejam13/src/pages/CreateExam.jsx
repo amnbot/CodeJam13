@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { addExam } from "../utils/firestoreFunctions";
 import { useNavigate } from "react-router-dom";
 
-
 const CreateExam = () => {
   const navigate = useNavigate();
-  
+
+  const [examName, setExamName] = useState("");
   const [input, setInput] = useState("");
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
   const [trueOrFalseQuestions, setTrueOrFalseQuestions] = useState(0);
@@ -16,6 +16,7 @@ const CreateExam = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const requestBody = {
+      name: examName,
       input,
       // numberOfQuestions,
       trueOrFalseQuestions,
@@ -37,7 +38,7 @@ const CreateExam = () => {
         addExam(data)
           .then((res) => {
             console.log(res);
-            navigate(`/exam/${res}`)
+            navigate(`/exam/${res}`);
           })
           .catch((err) => console.log(err));
         console.log(data);
@@ -51,18 +52,27 @@ const CreateExam = () => {
   return (
     <div className="space-x-4 space-y-4">
       <form onSubmit={handleSubmit} className="m-5 col">
-        <div className="grid grid-cols-3 gap-y-4 gap-4">
+        <div className="grid grid-cols-3 gap-y-4 gap-4 text-left">
+          <div className="col-span-3">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Exam name
+            </label>
+            <input
+              type="text"
+              value={examName}
+              placeholder="Exam name"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(e) => setExamName(e.target.value)}
+            />
+          </div>
           <div className="col-span-2">
-            <label
-              for="message"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Input
             </label>
             <textarea
               id="message"
               rows="4"
-              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter your input here (lecture notes, lecture transcript, ...)"
@@ -70,10 +80,7 @@ const CreateExam = () => {
           </div>
           <div className="flex-col my-4 space-y-4 text-left">
             <div>
-              <label
-                for="message"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Number of questions:
               </label>
               {/* <input
@@ -85,10 +92,7 @@ const CreateExam = () => {
           /> */}
             </div>
             <div>
-              <label
-                for="message"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 True or False:
               </label>
               <input
@@ -99,10 +103,7 @@ const CreateExam = () => {
               />
             </div>
             <div>
-              <label
-                for="message"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Multiple Choice:
               </label>
               <input
@@ -113,10 +114,7 @@ const CreateExam = () => {
               />
             </div>
             <div>
-              <label
-                for="message"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Numerical:
               </label>
               <input
@@ -127,10 +125,7 @@ const CreateExam = () => {
               />
             </div>
             <div>
-              <label
-                for="message"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Fill in the blank:
               </label>
               <input
