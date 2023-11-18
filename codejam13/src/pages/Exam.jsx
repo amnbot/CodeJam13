@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { addExamResult, getExam } from "../utils/firestoreFunctions";
 import QuestionCard from "../components/Question";
+import CardSingle from "./CardSingle";
+import {useNavigate} from 'react-router-dom';
 
 export default function Exam() {
+  const navigate = useNavigate();
   let { id } = useParams();
 
   const [exam, setExam] = useState(null);
@@ -28,6 +31,7 @@ export default function Exam() {
         return [...choices, answer];
       });
       setOptions(newOptions);
+      console.log('results: ', exam.results)
     }
   }, [exam]);
 
@@ -89,7 +93,11 @@ export default function Exam() {
   const resultUI = () => {
     return (
       <div>
-        <h1>Grade: {grade}</h1>
+        <h2 className="text-3xl">Grade: {grade}%</h2>
+        <CardSingle alwaysShow={true} grades={exam.results} title={"Your grades"} />
+        <button onClick={() => {
+          navigate(`/exam/${id}`)
+          }}>Retry</button>
       </div>
     )
   }

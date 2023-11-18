@@ -24,7 +24,7 @@ export const getExam = async (id) => {
   return docSnap.data();
 };
 
-export const getAllExams = async()=>{
+export const getAllExams = async () => {
   const querySnapshot = await getDocs(collection(db, "exams"));
   const docs = [];
   querySnapshot.forEach((doc) => {
@@ -43,7 +43,7 @@ export const updateExamName = async (id, newName) => {
 export const addExamResult = async (id, grade) => {
   const docRef = doc(db, "exams", id);
   // const docSnap = await getDoc(docRef);
-  const result = { grade, date: Timestamp.now() };
+  const result = { grade, date: Timestamp.now().toDate().toLocaleDateString() };
   await updateDoc(docRef, { results: arrayUnion(result) });
 };
 
@@ -55,12 +55,12 @@ export const addExamQuestions = async (id, newQ) => {
 
 export const removeExamQuestions = async (id, oldQ) => {
   const docRef = doc(db, "exams", id);
-  
 
   await updateDoc(docRef, { questions: arrayRemove(oldQ) });
 };
 
 export const createUser = async (user) => {
+  console.log("user", user);
   const userRef = await addDoc(collection(db, "users"), user);
   return userRef.id;
 };
