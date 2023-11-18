@@ -11,6 +11,7 @@ import Exam from "./pages/Exam";
 import PrivateRoute from "./services/PrivateRoute";
 import SignIn from "./components/SignIn";
 import MyExams from "./pages/MyExams"
+import { Navigate } from "react-router";
 import CardGrid from "./pages/CardGrid"
 
 function App() {
@@ -23,8 +24,7 @@ function App() {
       <Header />
       <Sidebar />
         <Routes>
-        
-          <Route path="/login" element={<SignIn />}/>
+          <Route path="/login" element={<SignIn />} exact/>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Dashboard />} exact/>
             <Route path="/create-exam" element={<CreateExam exact/>} /> 
@@ -32,6 +32,8 @@ function App() {
             <Route exact path="/my-exams/:id" element={<MyExams />} />
             <Route exact path="/my-exams" element={<CardGrid />} />
           </Route>
+          <Route path='/' element={<Navigate to='/login' />} />
+          <Route path='*' element={<Navigate to='/' />} />
         </Routes>
         {/* <Footer /> */}
       </Router>

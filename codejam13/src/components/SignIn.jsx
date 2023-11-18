@@ -4,6 +4,8 @@ import {
   GoogleAuthProvider,
   getAdditionalUserInfo,
 } from "firebase/auth";
+import { createUser } from '../utils/firestoreFunctions';
+import eventEmitter from '../services/EventEmitter';
 
 const SignIn = () => {
   const logGoogleUser = async () => {
@@ -16,10 +18,15 @@ const SignIn = () => {
         // The signed-in user info.
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
-        // ...
         const profile = getAdditionalUserInfo(result).profile;
-        
-        console.log(profile);
+
+        if(result.user.metadata.lastSignInTime === result.user.metadata.creationTime){
+            console.log("New User");
+            createUser(profile);
+        }
+
+        eventEmitter.emit('loggedIn', profile);
+
       } catch (error) {
         console.log(error);
         // Handle Errors here.
