@@ -10,6 +10,7 @@ import {
   arrayRemove,
   doc,
   Timestamp,
+  getDocs,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -22,6 +23,13 @@ export const getExam = async (id) => {
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 };
+
+export const getAllExams = async()=>{
+  const docRef = doc(db,"exams");
+  const docSnap = await getDocs(docRef);
+
+  return docSnap.data();
+}
 
 export const updateExamName = async (id, newName) => {
   const docRef = doc(db, "exams", id);
