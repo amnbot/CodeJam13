@@ -38,3 +38,16 @@ const removeExamQuestions = async(id, oldQ) =>{
 
     await updateDoc(doc, {questions: arrayRemove(oldQ)});
 }
+
+const createUser = async(user) =>{
+    const userRef = await addDoc(collection(db, "users"), user);
+    return userRef.id;
+}
+
+const getUser = async (id) =>{
+    const examRef = collection(db, "users");
+    const q = query(examRef, where("id", "==", id));
+    const doc = await getDoc(q);
+  
+    return doc.data();
+  }
