@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import Sidebar from "./components/Sidebar";
+import CreateExam from "./pages/CreateExam";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,6 +19,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
+          <Route exact path="/create-exam" element={<CreateExam />} /> 
         </Routes>
         {/* <Footer /> */}
       </Router>
