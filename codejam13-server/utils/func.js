@@ -5,6 +5,8 @@ const openai = new OpenAI({
 });
 
 const generateQuestions = async (prompt, input) => {
+  console.log("generating...")
+  console.log(process.env.OPENAI_API_KEY)
   const chatCompletion = await openai.chat.completions.create({
     messages: [
       { role: "system", content: prompt },

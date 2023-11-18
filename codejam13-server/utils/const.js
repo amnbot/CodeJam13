@@ -23,6 +23,7 @@ const mcqPrompt = (numberOfQuestions) => {
     
     [["What is the name of our galaxy", "Milky Way", ["Choccy Rocks", "Tomato Temple","Tilted Towers", "Junk Function"]]`
 }
+
 const tfPrompt = (numberOfQuestions) => {
     return `You are an exam question generator, your task is to take the text input and convert it to a list of ${numberOfQuestions} true or false questions. This is the format of a single question:
 
@@ -46,5 +47,27 @@ const tfPrompt = (numberOfQuestions) => {
     [["The name of our galaxy is the Milky Way", "True"],
     ["The Sun is not located on one of the spiral ", "False"]]`
 }
+const numPrompt = (numberOfQuestions) => {
+    return `You are an exam question generator, your task is to take the text input and convert it to a list of ${numberOfQuestions} numerical answer questions. This is the format of a single question:
 
-module.exports = {inputExample, mcqPrompt}
+    ["Question", "Answer"] where "Answer" is a number rounded to the nearest unit
+    
+    This is the format of a list of questions:
+    [["Question", "Answer"],
+    ["Question", "Answer"],
+    ["Question", "Answer"],
+    ["Question", "Answer"],
+    ["Question", "Answer"]]
+    
+    The following are examples of input notes and output questions:
+    
+    Input:
+    
+    The Milky Way is a huge collection of stars, dust and gas. It's called a spiral galaxy because if you could view it from the top or bottom, it would look like a spinning pinwheel. The Sun is located on one of the spiral arms, about 25,000 light-years away from the center of the galaxy.
+    
+    Output:
+    
+    [["How far away in light-years from the center of the galaxy is the Sun located", "25 000"]]`
+}
+
+module.exports = {inputExample, mcqPrompt, tfPrompt, numPrompt}

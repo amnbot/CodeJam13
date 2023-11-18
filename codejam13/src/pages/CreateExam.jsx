@@ -12,7 +12,7 @@ const handleSubmit = (e) => {
     e.preventDefault()
     const requestBody = {
         input,
-        numberOfQuestions,
+        // numberOfQuestions,
         trueOrFalseQuestions,
         multipleChoiceQuestions,
         numericalQuestions,
@@ -51,13 +51,13 @@ const handleSubmit = (e) => {
         <br />
         <label>
           Number of questions:
-          <input
+          {/* <input
             type="number"
             value={numberOfQuestions}
             onChange={(e) => setNumberOfQuestions(e.target.value)}
             min={5}
             max={20}
-          />
+          /> */}
         </label>
         <br />
         <label>

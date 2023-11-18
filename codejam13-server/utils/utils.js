@@ -27,11 +27,12 @@ const createQuestions = async (body) => {
   let prompt = "";
   let questions = {};
   if (body.multipleChoiceQuestions > 0) {
-    prompt = mcqPrompt(body.numberOfQuestions);
+    prompt = mcqPrompt(body.multipleChoiceQuestions);
     const output = await generateQuestions(prompt, body.input);
-    console.log("Output: ", output);
+    // console.log("Output: ", output);
     const mcq = parseMCQ(output);
-    questions.push({...questions, multipleChoice: mcq.multipleChoice});
+    questions = {...questions, multipleChoice: mcq.multipleChoice};
+    console.log(questions);
   }
   if (body.fillInTheBlankQuestions > 0) {
     // prompt = setPrompt(body.numberOfQuestions, "fitb");
