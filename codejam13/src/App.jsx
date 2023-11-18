@@ -11,9 +11,16 @@ import Exam from "./pages/Exam";
 import PrivateRoute from "./services/PrivateRoute";
 import SignIn from "./components/SignIn";
 import MyExams from "./pages/MyExams"
+import CardGrid from "./pages/CardGrid"
 
 function App() {
   const [count, setCount] = useState(0);
+  const cardData = [
+    {tilte: "Aymen"},
+    {title: "Asfsd"},
+    {title: "Fsdfsdfds"},
+    {title: "sffasada"}
+  ];
   
 
   return (
@@ -24,7 +31,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
           <Route exact path="/create-exam" element={<CreateExam />} /> 
-          <Route exact path="/my-exams" element={<MyExams />} />
+          <Route exact path="/my-exams" element={<CardGrid cards={cardData} />} />
           <Route exact path="/exam/:id" element={<Exam />} />
           <Route path="/login" element={<SignIn />}/>
           <Route element={<PrivateRoute />}>
