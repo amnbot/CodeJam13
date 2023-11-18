@@ -56,6 +56,10 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseUserMenu = (setting) => {
+    if(setting === 'logout'){
+      eventEmitter.emit('loggedOut');
+      return
+    }
     navigate(page[settings.indexOf(setting)]);
     setAnchorElUser(null);
   };
@@ -77,6 +81,7 @@ const ResponsiveAppBar = () => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center'}}>
+
           </Box>
 
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, justifyContent: 'center'  }}>
