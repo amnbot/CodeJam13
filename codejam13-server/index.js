@@ -6,6 +6,7 @@ const bodyParser = require("body-parser"); // Add the body-parser import
 const app = express();
 const { setPrompt, createQuestions } = require("./utils/utils");
 const { parseMCQ } = require("./utils/func");
+const { parseSingle } = require("./utils/func");
 
 const port = 3000;
 
@@ -39,4 +40,13 @@ const mockGenMCQ = `[
   ]]`;
 
 const mockParseMcq = parseMCQ(mockGenMCQ);
-console.log(JSON.stringify(mockParseMcq, null, 2));
+// console.log(JSON.stringify(mockParseMcq, null, 2));
+
+const questions = [
+  ["The name of our galaxy is the Milky Way", "True"],
+  ["The Sun is not located on one of the spiral arms of the Milky Way", "False"]
+  // ... other questions
+];
+
+const formattedQuestions = parseSingle(questions);
+console.log(JSON.stringify(formattedQuestions, null, 2));
