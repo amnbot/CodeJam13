@@ -55,5 +55,37 @@ const parseMCQ = (inputString) => {
   return result;
 }
 
+const parseSingle = (inputString) => {
+  const formattedString = inputString.map(qa => ({
+    question: qa[0],
+    answer: qa[1]
+  }));
 
-module.exports = { generateQuestions, parseMCQ };
+  return formattedString;
+
+}
+
+/*
+This is the format of a list of questions:
+    [["Question", "Answer"],
+    ["Question", "Answer"],
+    ["Question", "Answer"],
+    ["Question", "Answer"],
+    ["Question", "Answer"]]
+
+Output Format: A json object in the form:
+{
+        trueOrFalse: [
+                {
+                        question: "Question1",
+                        answer: "Answer",
+                },
+                {
+                        question: "Question2",
+                        answer: "Answer",
+                }
+        ]
+} */
+
+
+module.exports = { generateQuestions, parseMCQ, parseSingle };

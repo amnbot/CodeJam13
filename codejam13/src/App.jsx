@@ -16,12 +16,6 @@ import CardGrid from "./pages/CardGrid"
 
 function App() {
   const [count, setCount] = useState(0);
-  const cardData = [
-    {tilte: "Aymen"},
-    {title: "Asfsd"},
-    {title: "Fsdfsdfds"},
-    {title: "sffasada"}
-  ];
   
 
   return (
@@ -36,7 +30,7 @@ function App() {
             <Route path="/create-exam" element={<CreateExam exact/>} /> 
             <Route exact path="/exam/:id" element={<Exam />} />
             <Route exact path="/my-exams/:id" element={<MyExams />} />
-            <Route exact path="/my-exams" element={<CardGrid cards={cardData} />} />
+            <Route exact path="/my-exams" element={<CardGrid />} />
           </Route>
           <Route path='/' element={<Navigate to='/login' />} />
           <Route path='*' element={<Navigate to='/' />} />
