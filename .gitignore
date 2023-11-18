@@ -1,2 +1,5 @@
 /codejam13/node_modules
 /codejam13-server/node_modules
+
+.env
+package-lock.json

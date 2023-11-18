@@ -14,11 +14,18 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
+<<<<<<< HEAD
     "@mui/x-charts": "^6.18.1",
+=======
+    "bootstrap": "^5.3.2",
+    "firebase": "^10.6.0",
+>>>>>>> b29ed218d885db974ae40e8e44324dbbfc0939ad
     "react": "^18.2.0",
+    "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.19.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "tw-elements-react": "^1.0.0-alpha2"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
