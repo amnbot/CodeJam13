@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { addExam } from "../utils/firestoreFunctions";
+import { useNavigate } from "react-router-dom";
+
 
 const CreateExam = () => {
+  const navigate = useNavigate();
+  
   const [input, setInput] = useState("");
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
   const [trueOrFalseQuestions, setTrueOrFalseQuestions] = useState(0);
@@ -33,6 +37,7 @@ const CreateExam = () => {
         addExam(data)
           .then((res) => {
             console.log(res);
+            navigate(`/exam/${res}`)
           })
           .catch((err) => console.log(err));
         console.log(data);

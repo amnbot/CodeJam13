@@ -22,7 +22,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
           <Route exact path="/create-exam" element={<CreateExam />} /> 
-          <Route exact path="/my-exams" element={<MyExams />} /> 
+          <Route exact path="/my-exams" element={<MyExams />} />
+          <Route exact path="/exam/:id" element={<Exam />} />
         </Routes>
         {/* <Footer /> */}
       </Router>
