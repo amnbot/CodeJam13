@@ -20,7 +20,7 @@ const updateExamName = async(id, newName) => {
     const q = query(examRef, where("id", "==", id));
     const doc = await getDoc(q);
 
-    await updateDoc(doc, {name :newNname });
+    await updateDoc(doc, {name : newName });
 }
 
 const addExamQuestions = async(id, newQ) => {
