@@ -3,14 +3,13 @@ import { useParams } from 'react-router-dom';
 //import {TERipple} from 'tw-elements-react';
 import Container from 'react-bootstrap/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-import { getExam, updateExamName } from '../utils/firestoreFunctions';
+import { getAllExams, getExam, updateExamName } from '../utils/firestoreFunctions';
 import CardSingle from './CardSingle';
 import { cardActionAreaClasses } from '@mui/material';
 
 export default function MyExams() {
 
   let { id } = useParams();
-
   const [exam, setExam] = useState(null);
   const [disabled, setDisabled] = useState(true);
   
