@@ -25,10 +25,11 @@ export const getExam = async (id) => {
 };
 
 export const getAllExams = async()=>{
-  const docRef = doc(db,"exams");
-  const docSnap = await getDocs(docRef);
-
-  return docSnap.data();
+  const querySnapshot = await getDocs(collection(db, "exams"));
+  const docs = [];
+  querySnapshot.forEach((doc) => {
+    docs.push(doc.data());
+  });
 }
 
 export const updateExamName = async (id, newName) => {
