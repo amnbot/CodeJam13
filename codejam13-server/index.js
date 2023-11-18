@@ -18,8 +18,9 @@ app.post("/create-exam", async (req, res) => {
   // Handle the logic for creating an exam here
   const { body } = req;
   console.log("Input: ", body); //body will contain the parsed body data
-  createQuestions(body);
-  return "Creating exam";
+  const exam = await createQuestions(body);
+  console.log(exam)
+  res.json(exam);
 });
 
 // Start the server
@@ -35,14 +36,7 @@ const mockGenMCQ = `[
     ["What percentage of Africa does the Sahara desert cover?", "31%", ["10%", "20%", "40%", "50%"]],
     ["Which country does not have any part of its territory covered by the Sahara desert?", "Kenya", ["Mali", "Chad", "Algeria", "Libya"]],
     ["What is the largest desert in the world?", "Sahara", ["Arabian", "Antarctic", "Gobi", "Namib"]]
-  ]
-  Output:  [
-    ["Which desert covers large parts of Algeria, Chad, Egypt, Libya, Mali, Mauritania, Morocco, Niger, Western Sahara, Sudan, and Tunisia?", "Sahara", ["Kalahari", "Gobi", "Atacama", "Namib"]],
-    ["What is the total area covered by the Sahara desert?", "9 million square kilometres (3,500,000 sq mi)", ["5 million square kilometres", "7 million square kilometres", "10 million square kilometres", "12 million square kilometres"]],
-    ["What percentage of Africa does the Sahara desert cover?", "31%", ["10%", "20%", "40%", "50%"]],
-    ["Which country does not have any part of its territory covered by the Sahara desert?", "Kenya", ["Mali", "Chad", "Algeria", "Libya"]],
-    ["What is the largest desert in the world?", "Sahara", ["Arabian", "Antarctic", "Gobi", "Namib"]]`;
+  ]]`;
 
-// const mockParseMcq = parseMCQ(mockGenMCQ);
-// console.log(mockParseMcq.multipleChoice.length)
-// console.log(JSON.stringify(mockParseMcq, null, 2));
+const mockParseMcq = parseMCQ(mockGenMCQ);
+console.log(JSON.stringify(mockParseMcq, null, 2));
