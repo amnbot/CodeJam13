@@ -39,6 +39,12 @@ const ResponsiveAppBar = () => {
     eventEmitter.emit('sideBarClicked');
   };
 
+  const handleOpenNavBar = () => {
+    console.log('Button clicked in ComponentB');
+    openSideBar();
+  };
+
+
   const handleCloseNavMenu = (page) => {
     if(page === 'Group'){
       console.log('Button clicked in ComponentB');
@@ -60,16 +66,17 @@ const ResponsiveAppBar = () => {
     <AppBar position="static" sx={{ padding : 0 }}>
       <Container maxWidth='xxl'>
         <Toolbar disableGutters>
+        <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => handleOpenNavBar()}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center'}}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => handleCloseNavMenu(page)}
-                sx={{ my: 2, color: 'white', display: 'block', margin: '0 12px' }}
-              >
-                {page}
-              </Button>
-            ))}
           </Box>
 
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, justifyContent: 'center'  }}>
