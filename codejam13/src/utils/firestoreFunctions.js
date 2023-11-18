@@ -9,6 +9,8 @@ import {
   arrayUnion,
   arrayRemove,
   doc,
+  Timestamp,
+  getDocs,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -22,28 +24,38 @@ export const getExam = async (id) => {
   return docSnap.data();
 };
 
-export const updateExamName = async (id, newName) => {
-  const examRef = collection(db, "exams");
-  const q = query(examRef, where("id", "==", id));
-  const doc = await getDoc(q);
+export const getAllExams = async()=>{
+  const querySnapshot = await getDocs(collection(db, "exams"));
+  const docs = [];
+  querySnapshot.forEach((doc) => {
+    docs.push(doc.data());
+  });
+}
 
-  await updateDoc(doc, { name: newName });
+export const updateExamName = async (id, newName) => {
+  const docRef = doc(db, "exams", id);
+
+  await updateDoc(docRef, { name: newName });
+};
+
+export const addExamResult = async (id, grade) => {
+  const docRef = doc(db, "exams", id);
+  // const docSnap = await getDoc(docRef);
+  const result = { grade, date: Timestamp.now() };
+  await updateDoc(docRef, { results: arrayUnion(result) });
 };
 
 export const addExamQuestions = async (id, newQ) => {
-  const examRef = collection(db, "exams");
-  const q = query(examRef, where("id", "==", id));
-  const doc = await getDoc(q);
+  const docRef = doc(db, "exams", id);
 
-  await updateDoc(doc, { questions: arrayUnion(newQ) });
+  await updateDoc(docRef, { questions: arrayUnion(newQ) });
 };
 
 export const removeExamQuestions = async (id, oldQ) => {
-  const examRef = collection(db, "exams");
-  const q = query(examRef, where("id", "==", id));
-  const doc = await getDoc(q);
+  const docRef = doc(db, "exams", id);
+  
 
-  await updateDoc(doc, { questions: arrayRemove(oldQ) });
+  await updateDoc(docRef, { questions: arrayRemove(oldQ) });
 };
 
 export const createUser = async (user) => {
@@ -52,11 +64,9 @@ export const createUser = async (user) => {
 };
 
 export const getUser = async (id) => {
-  const examRef = collection(db, "users");
-  const q = query(examRef, where("id", "==", id));
-  const doc = await getDoc(q);
-
-  return doc.data();
+  const docRef = doc(db, "users", id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
 };
 
 const addSummary = async (summary) => {
@@ -65,9 +75,8 @@ const addSummary = async (summary) => {
 };
 
 const getSummary = async (id) => {
-  const summaryRef = collection(db, "summaries");
-  const q = query(summaryRef, where("id", "==", id));
-  const doc = await getDoc(q);
+  const docRef = doc(db, "summaries", id);
+  const docSnap = await getDoc(docRef);
 
-  return doc.data();
+  return docSnap.data();
 };

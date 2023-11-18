@@ -38,11 +38,7 @@ function App() {
             <Route path="/my-exams" element={<MyExams />} exact />
             <Route exact path="/exam/:id" element={<Exam />} />
             <Route exact path="/my-exams/:id" element={<MyExams />} />
-            <Route
-              exact
-              path="/my-exams"
-              element={<CardGrid cards={cardData} />}
-            />
+            <Route exact path="/my-exams" element={<CardGrid />} />
             <Route path="/my-groups" element={<MyGroups />} exact />
             <Route exact path="/group/:id" element={<Group />} />
             <Route exact path="/my-group/:id" element={<MyGroups />} />
