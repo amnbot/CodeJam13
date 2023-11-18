@@ -74,7 +74,7 @@ export default function SwipeableTemporaryDrawer() {
 
   const list = (anchor) => (
     <><Box sx={{display : 'flex', height : '40px', marginTop : '30px', padding : "7px"}}>
-        <Box sx={{ display : "flex", width : "66%", justifyContent : "center"}}>
+        <Box sx={{ display : "flex", width : "75%", justifyContent : "center", paddingRight : "10px"}}> 
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize : "30px"}} />
           <Typography
             variant="h6"
@@ -100,7 +100,6 @@ export default function SwipeableTemporaryDrawer() {
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer(anchor, false)}
-            sx={{ width : "33%"}}
           >
             <ArrowBackIosIcon/>
         </IconButton>
