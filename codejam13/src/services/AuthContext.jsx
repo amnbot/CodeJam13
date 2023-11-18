@@ -5,12 +5,7 @@ import eventEmitter from './EventEmitter';
 
 const AuthContext = createContext();
 
-<<<<<<< HEAD
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-=======
 var currentUser = null;
->>>>>>> a97157a50b3ddad2f44085105db832a21180dfb2
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
