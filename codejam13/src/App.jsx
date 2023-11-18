@@ -10,6 +10,7 @@ import CreateExam from "./pages/CreateExam";
 import Exam from "./pages/Exam";
 import PrivateRoute from "./services/PrivateRoute";
 import SignIn from "./components/SignIn";
+import MyExams from "./pages/MyExams"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,7 +26,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Dashboard />} exact/>
             <Route path="/create-exam" element={<CreateExam exact/>} /> 
-            <Route path="/exercise" element={<Exam />} exact/>
+            <Route path="/my-exams" element={<MyExams />} exact/>
           </Route>
         </Routes>
         {/* <Footer /> */}

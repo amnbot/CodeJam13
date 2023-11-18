@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 export default function SwipeableTemporaryDrawer() {
 
   const pages = ['Dashboard', 'My Exams', 'Create Exams'];
-  const links = ['/', '/exercise', '/create-exam'];
+  const links = ['/', '/my-exams', '/create-exam'];
 
   const secondPages = ['My Groups'];
   const secondLinks = ['/groups'];
