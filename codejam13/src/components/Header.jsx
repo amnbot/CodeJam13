@@ -77,6 +77,7 @@ const ResponsiveAppBar = () => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center'}}>
+
           </Box>
 
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, justifyContent: 'center'  }}>

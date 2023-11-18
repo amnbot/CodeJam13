@@ -22,7 +22,7 @@ function App() {
       <Header />
       <Sidebar />
         <Routes>
-          <Route path="/login" element={<SignIn />}/>
+          <Route path="/login" element={<SignIn />} exact/>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Dashboard />} exact/>
             <Route path="/create-exam" element={<CreateExam exact/>} /> 
