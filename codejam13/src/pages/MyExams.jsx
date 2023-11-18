@@ -1,5 +1,5 @@
 import React from 'react'
-import {TERipple} from 'tw-elements-react';
+//import {TERipple} from 'tw-elements-react';
 import Container from 'react-bootstrap/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -18,7 +18,7 @@ export default function MyExams() {
                         aria-describedby="button-addon3" />
 
                     {/* <!--Search button--> */}
-                    <TERipple>
+                    
                     <button
                         className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
                         type="button"
@@ -32,7 +32,7 @@ export default function MyExams() {
                         id="button-add">
                         +
                     </button>
-                    </TERipple>
+                    
                 </div>
               
               <div>
