@@ -51,3 +51,17 @@ const getUser = async (id) =>{
   
     return doc.data();
   }
+
+const addSummary = async (summary) =>{
+    const summaryRef = await addDoc(collection(db, "summaries"), summary);
+    return summaryRef.id;
+
+}
+
+const getSummary = async (id) =>{
+  const summaryRef = collection(db, "summaries");
+  const q = query(summaryRef, where("id", "==", id));
+  const doc = await getDoc(q);
+
+  return doc.data();
+}
