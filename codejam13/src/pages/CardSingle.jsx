@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
-const Card = ({title, grades}) => {
+const Card = ({title, grades, alwaysShow=false}) => {
     // Replace with your actual data fetching logic
      // Sample data - replace with your actual data
      const [examData, setExamData] = useState({
@@ -19,7 +19,7 @@ const Card = ({title, grades}) => {
     const {gradesList, datesList} = separateGradesAndDates(examData.grades)
 
     // State to control the visibility of the graph
-    const [showGraph, setShowGraph] = useState(false);
+    const [showGraph, setShowGraph] = useState(alwaysShow);
 
     // Calculate the most recent grade and average grade
     const mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
@@ -29,9 +29,9 @@ const Card = ({title, grades}) => {
         <div className='bg-gray-700'>
         
             <h1>{examData.title}</h1>
-            <button onClick={() => setShowGraph(!showGraph)}>
+            {!alwaysShow ? <button onClick={() => setShowGraph(!showGraph)}>
                 {showGraph ? 'Hide Graph' : 'Show Graph'}
-            </button>
+            </button> : null}
             {showGraph ? <BarChart 
                 xAxis={[{ scaleType: 'band', data: datesList}]}
                 series={[{data: gradesList}]}
