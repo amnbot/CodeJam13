@@ -24,7 +24,7 @@ export default function MyExams() {
     return (
       <div>MyExams
 
-      <div className="relative mb-4 flex w-full flex-wrap items-stretch"><input placeholder='Exam name...'></input></div> 
+      <div><input value={exam.name}></input> <button>Edit name</button><button>Save </button></div> 
 
       <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                       <input
