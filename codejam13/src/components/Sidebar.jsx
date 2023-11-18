@@ -13,8 +13,12 @@ import MailIcon from '@mui/icons-material/Mail';
 import eventEmitter from '../services/EventEmitter';
 import AdbIcon from '@mui/icons-material/Adb';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function SwipeableTemporaryDrawer() {
 
@@ -45,6 +49,16 @@ export default function SwipeableTemporaryDrawer() {
     };
   }, []);
 
+  const navigate = useNavigate();
+
+  const handleNavigation = (page) => {
+      navigate(links[pages.indexOf(page)]);
+  };
+
+  const handleNavigationGroup = (page) => {
+      navigate(secondLinks[secondPages.indexOf(page)]);
+  };
+
   const toggleDrawer = (anchor, open) => (event) => {
     console.log("yup");
     if (
@@ -59,8 +73,9 @@ export default function SwipeableTemporaryDrawer() {
   };
 
   const list = (anchor) => (
-    <><Box sx={{display : 'flex', height : '40px', marginTop : '20px'}}>
-       <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+    <><Box sx={{display : 'flex', height : '40px', marginTop : '30px', padding : "7px"}}>
+        <Box sx={{ display : "flex", width : "66%", justifyContent : "center"}}>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize : "30px"}} />
           <Typography
             variant="h6"
             noWrap
@@ -78,56 +93,49 @@ export default function SwipeableTemporaryDrawer() {
           >
             LOGO
           </Typography>
-      <Button onClick={toggleDrawer(anchor, false)}>Close</Button>
-    </Box><><Box
-      sx={{ width: '300px' }}
+        </Box>
+        <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(anchor, false)}
+            sx={{ width : "33%"}}
+          >
+            <ArrowBackIosIcon/>
+        </IconButton>
+    </Box>
+    <Box
+      sx={{ width: '300px', marginTop : "20px" }}
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
         {pages.map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ fontSize : '20px' }}>
+          <ListItem key={text}>
+            <ListItemButton sx={{ justifyContent : "center"}}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText sx={{fontSize : "50px"}} primary={text} onClick={() => handleNavigation(text)}/>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {secondPages.map((text, index) => (
+          <ListItem key={text} >
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} onClick={() => handleNavigation(text)}/>
             </ListItemButton>
           </ListItem>
-        ))};
+        ))}
       </List>
-    </Box>
-        <Box
-          sx={{ width: '300px' }}
-          onClick={toggleDrawer(anchor, false)}
-          onKeyDown={toggleDrawer(anchor, false)}
-        >
-          <List>
-            {pages.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {secondPages.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box></></>
+    </Box></>
   );
 
   return (
