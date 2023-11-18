@@ -56,6 +56,10 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseUserMenu = (setting) => {
+    if(setting === 'logout'){
+      eventEmitter.emit('loggedOut');
+      return
+    }
     navigate(page[settings.indexOf(setting)]);
     setAnchorElUser(null);
   };

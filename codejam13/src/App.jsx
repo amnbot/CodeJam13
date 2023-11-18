@@ -11,6 +11,7 @@ import Exam from "./pages/Exam";
 import PrivateRoute from "./services/PrivateRoute";
 import SignIn from "./components/SignIn";
 import MyExams from "./pages/MyExams"
+import { Navigate } from "react-router";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,6 +29,8 @@ function App() {
             <Route path="/create-exam" element={<CreateExam exact/>} /> 
             <Route path="/my-exams" element={<MyExams />} exact/>
           </Route>
+          <Route path='/' element={<Navigate to='/login' />} />
+          <Route path='*' element={<Navigate to='/' />} />
         </Routes>
         {/* <Footer /> */}
       </Router>

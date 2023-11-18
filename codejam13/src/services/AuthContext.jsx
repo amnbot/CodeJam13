@@ -5,7 +5,7 @@ import eventEmitter from './EventEmitter';
 
 const AuthContext = createContext();
 
-var currentUser = {};
+var currentUser = null;
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
@@ -14,21 +14,25 @@ export const AuthProvider = ({ children }) => {
 
     setIsAuthenticated(window.sessionStorage.getItem('isAuthenticated') ?? false);
 
-    const handleEvent = (profile) => {
+    const handleEventLogin = (profile) => {
       login();
       setUser(profile);
     };
+    const handleEventLogout = () => {
+      logout();
+    };
 
-    eventEmitter.on('loggedIn', handleEvent);
+    eventEmitter.on('loggedIn', handleEventLogin);
+    eventEmitter.on('loggedOut', handleEventLogout);
 
     return () => {
       // Clean up the event listener when the component unmounts
-      eventEmitter.off('loggedIn', handleEvent);
+      eventEmitter.off('loggedIn', handleEventLogin);
+      eventEmitter.off('loggedOut', handleEventLogout);
     };
   }, []);
 
   useEffect(() => {
-    console.log("isAuthenticated: " + isAuthenticated);
     if(isAuthenticated !== null){
       window.sessionStorage.setItem('isAuthenticated', isAuthenticated);
     }
@@ -45,7 +49,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setIsAuthenticated(false);
-    //window.location.href = '/login';
+    currentUser = null;
+    window.location.href = '/login';
   };
 
   return (
