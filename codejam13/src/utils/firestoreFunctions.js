@@ -1,4 +1,4 @@
-import {db} from "../firestoreConfigSetter.js";
+import {db} from "./firestoreConfigSetter.js";
 import { collection, addDoc, getDoc, updateDoc, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
 
 export const addExam = async (exam) =>{

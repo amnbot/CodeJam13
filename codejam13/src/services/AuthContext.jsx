@@ -5,12 +5,15 @@ import eventEmitter from './EventEmitter';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+var currentUser = {};
 
-  var currentUser = {};
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(null)
 
   useEffect(() => {
+
+    setIsAuthenticated(window.sessionStorage.getItem('isAuthenticated') ?? false);
+
     const handleEvent = (profile) => {
       login();
       setUser(profile);
@@ -25,7 +28,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // dont know what i am doing
+    console.log("isAuthenticated: " + isAuthenticated);
+    if(isAuthenticated !== null){
+      window.sessionStorage.setItem('isAuthenticated', isAuthenticated);
+    }
   }, [isAuthenticated]);
 
   const setUser = (profile) => {
@@ -34,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsAuthenticated(true);
-
+    window.location.href = '/';
   };
 
   const logout = () => {
@@ -47,6 +53,10 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const checkUser = () => {
+  return window.sessionStorage.getItem('isAuthenticated') ?? false;
 };
 
 export const useAuth = () => {
