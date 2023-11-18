@@ -35,7 +35,6 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Dashboard />} exact />
             <Route path="/create-exam" element={<CreateExam exact />} />
-            <Route path="/my-exams" element={<MyExams />} exact />
             <Route exact path="/exam/:id" element={<Exam />} />
             <Route exact path="/my-exams/:id" element={<MyExams />} />
             <Route exact path="/my-exams" element={<CardGrid />} />
