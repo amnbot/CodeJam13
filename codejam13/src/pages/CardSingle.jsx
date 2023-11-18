@@ -26,9 +26,9 @@ const Card = ({title, grades, alwaysShow=false}) => {
     const averageGrade = examData.grades.reduce((acc, curr) => acc + curr.grade, 0) / examData.grades.length;  
 
     return (
-        <div className='bg-gray-700'>
+        <div className='bg-gray-700 m-4 rounded-3xl p-4'>
         
-            <h1>{examData.title}</h1>
+            <h1 className='text-3xl italic'>{examData.title}</h1>
             {!alwaysShow ? <button onClick={() => setShowGraph(!showGraph)}>
                 {showGraph ? 'Hide Graph' : 'Show Graph'}
             </button> : null}
