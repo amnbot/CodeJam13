@@ -22,15 +22,19 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
     return { gradesList, datesList };
   }
 
-  const { gradesList, datesList } = separateGradesAndDates(examData.grades);
-
   // State to control the visibility of the graph
 
   // Calculate the most recent grade and average grade
-  const mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
-  const averageGrade =
+  let mostRecentGrade = NaN
+  let averageGrade = NaN
+  if (grades.length > 0){
+    const { gradesList, datesList } = separateGradesAndDates(examData.grades);
+    mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
+    averageGrade =
     examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
     examData.grades.length;
+    console.log(grades)
+  }
 
   return (
     <div
@@ -49,7 +53,7 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
       <button onClick={onToggle}>
         {isGraphShown ? "Hide Graph" : "Show Graph"}
       </button>
-      {isGraphShown ? (
+      {isGraphShown && grades.length > 0 ? (
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList }]}
           series={[{ data: gradesList }]}
