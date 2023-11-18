@@ -12,9 +12,16 @@ import PrivateRoute from "./services/PrivateRoute";
 import SignIn from "./components/SignIn";
 import MyExams from "./pages/MyExams"
 import { Navigate } from "react-router";
+import CardGrid from "./pages/CardGrid"
 
 function App() {
   const [count, setCount] = useState(0);
+  const cardData = [
+    {tilte: "Aymen"},
+    {title: "Asfsd"},
+    {title: "Fsdfsdfds"},
+    {title: "sffasada"}
+  ];
   
 
   return (
@@ -28,6 +35,9 @@ function App() {
             <Route path="/" element={<Dashboard />} exact/>
             <Route path="/create-exam" element={<CreateExam exact/>} /> 
             <Route path="/my-exams" element={<MyExams />} exact/>
+            <Route exact path="/exam/:id" element={<Exam />} />
+            <Route exact path="/my-exams/:id" element={<MyExams />} />
+            <Route exact path="/my-exams" element={<CardGrid cards={cardData} />} />
           </Route>
           <Route path='/' element={<Navigate to='/login' />} />
           <Route path='*' element={<Navigate to='/' />} />
