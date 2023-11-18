@@ -38,7 +38,7 @@ const handleSubmit = (e) => {
 };
 
   return (
-    <div>
+    <div className='bg-white rounded-xl text-black'>
       <form onSubmit={handleSubmit}>
         <label>
           Input:
