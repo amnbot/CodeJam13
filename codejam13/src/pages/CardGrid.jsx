@@ -5,7 +5,6 @@ import { getAllExams } from "../utils/firestoreFunctions";
 const CardGrid = ({ cardsfd }) => {
 
     const allExams = getAllExams()
-    console.log(allExams)
     const cards = [
         {
         title: "Aymen",
