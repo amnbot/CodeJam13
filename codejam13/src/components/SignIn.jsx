@@ -1,11 +1,11 @@
-import { auth, provider} from '../utils/firestoreConfigSetter';
+import { auth, provider } from "../utils/firestoreConfigSetter";
 import {
   signInWithPopup,
   GoogleAuthProvider,
   getAdditionalUserInfo,
 } from "firebase/auth";
-import { createUser } from '../utils/firestoreFunctions';
-import eventEmitter from '../services/EventEmitter';
+import { createUser } from "../utils/firestoreFunctions";
+import eventEmitter from "../services/EventEmitter";
 
 const SignIn = () => {
   const logGoogleUser = async () => {
@@ -19,14 +19,16 @@ const SignIn = () => {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         const profile = getAdditionalUserInfo(result).profile;
-
-        if(result.user.metadata.lastSignInTime === result.user.metadata.creationTime){
-            console.log("New User");
-            createUser(profile);
+        if (
+          result.user.metadata.lastSignInTime ===
+          result.user.metadata.creationTime
+        ) {
+          createUser(profile).then((result) => {
+            eventEmitter.emit("loggedIn", profile);
+          });
+        } else {
+          eventEmitter.emit("loggedIn", profile);
         }
-
-        eventEmitter.emit('loggedIn', profile);
-
       } catch (error) {
         console.log(error);
         // Handle Errors here.

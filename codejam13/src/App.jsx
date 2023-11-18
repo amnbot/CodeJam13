@@ -15,6 +15,7 @@ import { Navigate } from "react-router";
 import CardGrid from "./pages/CardGrid";
 import MyGroups from "./pages/MyGroups";
 import Group from "./pages/Group";
+import Community from "./pages/Community";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -47,6 +48,7 @@ function App() {
               path="/my-groups"
               element={<CardGrid cards={cardData} />}
             />
+            <Route exact path="/community" element={<Community />} />
           </Route>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="*" element={<Navigate to="/" />} />
