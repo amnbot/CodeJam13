@@ -32,7 +32,7 @@ export const getAllExams = async()=>{
   });
 
   return docs;
-}
+};
 
 export const updateExamName = async (id, newName) => {
   const docRef = doc(db, "exams", id);
