@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addExam } from "../utils/firestoreFunctions";
 
 const CreateExam = () => {
   const [input, setInput] = useState("");
@@ -29,6 +30,11 @@ const CreateExam = () => {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
+        addExam(data)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
         console.log(data);
       })
       .catch((error) => {
