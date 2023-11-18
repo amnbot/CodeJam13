@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Sidebar from "./components/Sidebar";
 import CreateExam from "./pages/CreateExam";
 import Exam from "./pages/Exam";
+import MyExams from "./pages/MyExams"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,7 +22,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
           <Route exact path="/create-exam" element={<CreateExam />} /> 
-          <Route exact path="/exercise" element={<Exam />} /> 
+          <Route exact path="/my-exams" element={<MyExams />} /> 
         </Routes>
         {/* <Footer /> */}
       </Router>
