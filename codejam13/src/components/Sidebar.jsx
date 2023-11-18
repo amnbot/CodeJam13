@@ -10,14 +10,30 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import eventEmitter from '../services/EventEmitter';
+import { useEffect } from 'react';
 
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
+    'left': false
   });
+
+  var isOpen = false;
+
+  useEffect(() => {
+    const handleEvent = () => {
+      console.log(isOpen);
+      isOpen ? toggleDrawer('left', true) : toggleDrawer('left', false);
+      isOpen = !isOpen;
+    };
+
+    eventEmitter.on('sideBarClicked', handleEvent);
+
+    return () => {
+      // Clean up the event listener when the component unmounts
+      eventEmitter.off('sideBarClicked', handleEvent);
+    };
+  }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -68,19 +84,16 @@ export default function SwipeableTemporaryDrawer() {
 
   return (
     <div>
-      {['left', 'right', 'top', 'bottom'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+        <React.Fragment key={'left'}>
           <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
+            anchor={'left'}
+            open={state['left']}
+            onClose={toggleDrawer('left', false)}
+            onOpen={toggleDrawer('left', true)}
           >
-            {list(anchor)}
+            {list('left')}
           </SwipeableDrawer>
         </React.Fragment>
-      ))}
     </div>
   );
 }
