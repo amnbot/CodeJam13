@@ -9,6 +9,7 @@ import {
   arrayUnion,
   arrayRemove,
   doc,
+  Timestamp,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -28,6 +29,13 @@ export const updateExamName = async (id, newName) => {
   const doc = await getDoc(q);
 
   await updateDoc(doc, { name: newName });
+};
+
+export const addExamResult = async (id, grade) => {
+  const docRef = doc(db, "exams", id);
+  // const docSnap = await getDoc(docRef);
+  const result = { grade, date: Timestamp.now() };
+  await updateDoc(docRef, { results: arrayUnion(result) });
 };
 
 export const addExamQuestions = async (id, newQ) => {

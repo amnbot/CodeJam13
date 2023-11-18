@@ -28,7 +28,8 @@ const QuestionCard = ({
               type="radio"
               id={`choice-${choiceIndex}`}
               name="answer"
-              value={answers[questionIndex]}
+              value={-1}
+              checked={answers[questionIndex] === choiceIndex}
               onChange={(e) => {
                 setAnswers((prevAnswer) => {
                   const newAnswers = [...prevAnswer];
