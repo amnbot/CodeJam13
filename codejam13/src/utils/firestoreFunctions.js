@@ -30,6 +30,8 @@ export const getAllExams = async()=>{
   querySnapshot.forEach((doc) => {
     docs.push(doc.data());
   });
+
+  return docs;
 }
 
 export const updateExamName = async (id, newName) => {
