@@ -3,18 +3,31 @@ import { useParams } from 'react-router-dom';
 //import {TERipple} from 'tw-elements-react';
 import Container from 'react-bootstrap/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-import { getExam } from '../utils/firestoreFunctions';
+import { getExam, updateExamName } from '../utils/firestoreFunctions';
 
 export default function MyExams() {
+
   let { id } = useParams();
 
   const [exam, setExam] = useState(null);
- 
+  const [disabled, setDisabled] = useState(true);
+  
+  
+  function editClick(){
+    setDisabled(false);
+  }
+
+  function saveClick(){
+    updateExamName(id, name);
+    setDisabled(true);
+  }
   useEffect(() => {
     getExam(id)
       .then((res) => setExam(res))
       .catch((err) => console.log(err));
   }, []);
+
+  const [name, setName] = useState(exam ? exam.name : '');
   
   useEffect(() => {
    if(exam) console.log(exam);
@@ -22,9 +35,9 @@ export default function MyExams() {
   
   if(exam){
     return (
-      <div>MyExams
+      <div>
 
-      <div><input value={exam.name}></input> <button>Edit name</button><button>Save </button></div> 
+      <div><input defaultValue={exam.name} disabled={disabled} onChange={(e) => setName(e.target.value)}></input> <button onClick={editClick}>Edit name</button><button onClick={saveClick}>Save </button></div> 
 
       <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                       <input
