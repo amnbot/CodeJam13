@@ -23,8 +23,13 @@ export default function Dashboard() {
     return;
   }
   return (
-    <div className="text-3xl">
-      Dashboard
+    <div className="text-3xl"
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)", // This will create three columns
+      gap: "1rem", // Adjust the gap to your preference
+      padding: "1rem", // Adjust the padding to your preference
+    }}>
       <div className="bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between">
         <h1 className="text-3xl font-bold">
           {"Your Average Score over the Last Week"}
