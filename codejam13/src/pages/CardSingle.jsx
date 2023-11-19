@@ -14,23 +14,27 @@ const Card = ({ title, grades, alwaysShow = false }) => {
     const gradesList = gradesArr.map((item) => {
       return { data: [item] };
     });
-    console.log(gradesList)
+    console.log(gradesList);
     const datesList = gradesArray.map((item) => item.date);
 
     return { gradesList, datesList };
   }
 
-  const { gradesList, datesList } = separateGradesAndDates(examData.grades);
-
   // State to control the visibility of the graph
   const [showGraph, setShowGraph] = useState(alwaysShow);
 
-  // Calculate the most recent grade and average grade
-  const mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
-  const averageGrade =
+  let mostRecentGrade = NaN;
+  let averageGrade = NaN;
+  let gradesList = [];
+  let datesList = [];
+  if (grades.length > 0) {
+    gradesList, (datesList = separateGradesAndDates(examData.grades));
+    // Calculate the most recent grade and average grade
+    mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
+    averageGrade =
     examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
     examData.grades.length;
-
+  }
   return (
     <div className="bg-gray-700 m-4 rounded-3xl p-4">
       <h1 className="text-3xl italic">{examData.title}</h1>
@@ -39,10 +43,10 @@ const Card = ({ title, grades, alwaysShow = false }) => {
           {showGraph ? "Hide Graph" : "Show Graph"}
         </button>
       ) : null}
-      {showGraph ? (
+      {showGraph && grades.length > 0? (
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList }]}
-          series={gradesList }
+          series={gradesList}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
