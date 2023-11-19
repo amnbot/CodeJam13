@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card"; // Adjust the path as per your project structure
 import { getAllExams } from "../utils/firestoreFunctions";
 
-const CardGrid = ({ cardsfd }) => {
+const CardGrid = () => {
   const [allExams, setAllExams] = useState([]);
 
   useEffect(() => {
@@ -14,41 +14,6 @@ const CardGrid = ({ cardsfd }) => {
   useEffect(() => {
     console.log(allExams);
   }, [allExams]);
-
-  const cards = [
-    {
-      title: "Aymen",
-      grades: [
-        { grade: 40, date: "2023-01-01" },
-        { grade: 30, date: "2023-01-15" },
-        { grade: 40, date: "2023-02-01" },
-      ],
-    },
-    {
-      title: "Asfsd",
-      grades: [
-        { grade: 78, date: "2023-01-01" },
-        { grade: 82, date: "2023-01-15" },
-        { grade: 85, date: "2023-02-01" },
-      ],
-    },
-    {
-      title: "Fsdfsdfds",
-      grades: [
-        { grade: 100, date: "2023-01-01" },
-        { grade: 99, date: "2023-01-15" },
-        { grade: 2, date: "2023-02-01" },
-      ],
-    },
-    {
-      title: "sffasada",
-      grades: [
-        { grade: 21, date: "2023-01-01" },
-        { grade: 82, date: "2023-01-15" },
-        { grade: 85, date: "2023-02-01" },
-      ],
-    },
-  ];
 
   const [activeCardTitle, setActiveCardTitle] = useState("");
 

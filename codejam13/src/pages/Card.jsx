@@ -64,7 +64,6 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
     }
   }
 
-  console.log(datesList);
   return (
     <div
       className="bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between"
