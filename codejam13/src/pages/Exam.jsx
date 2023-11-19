@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowRightRounded, ArrowLeftRounded } from "@mui/icons-material";
 import { getGradeEmoji } from "../utils/utils";
 import QuestionCardTF from "../components/QuestionCardTF";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Exam() {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ export default function Exam() {
   const [showResult, setShowResult] = useState(false);
 
   const [questions, setQuestions] = useState([]);
+
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -73,7 +76,11 @@ export default function Exam() {
       console.log(questions);
       setAnswers(Array(questions.length).fill(-1));
       const newOptions = questions.map((question) => {
-        const { choices, answer } = question;
+        var { choices, answer } = question;
+        if (choices.includes(answer)) {
+          const idx = choices.indexOf(answer);
+          choices = choices.splice(idx, 1)
+        }
         return [...choices, answer];
       });
       setOptions(newOptions);
@@ -231,6 +238,7 @@ export default function Exam() {
       <div className="mx-64">
         <h1 className="m-4 font-bold ">{exam.name}</h1>
         {!showResult ? examUI() : resultUI()}
+        {generating ? <CircularProgress /> : <div></div>}
       </div>
     );
   }
