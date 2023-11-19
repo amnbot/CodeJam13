@@ -6,6 +6,7 @@ import { getExam, getGroup } from "../utils/firestoreFunctions";
 import { Container, IconButton, Grid, Card } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import { getUsersByIds } from "../utils/firestoreFunctions";
 
 export default function Group() {
   let { id } = useParams();
@@ -31,6 +32,7 @@ export default function Group() {
   //   };
 
   const [group, setGroup] = useState(null);
+  const [members, setMembers] = useState([]);
 
   const addExam = (exam) => {
     // add exam to group
@@ -39,7 +41,11 @@ export default function Group() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // group call
+    if (group) {
+      getUsersByIds(group.members).then((res) => {
+        setMembers(res);
+      });
+    }
   }, [group]);
 
   useEffect(() => {
@@ -78,10 +84,7 @@ export default function Group() {
           </div>
           <div className="col-span-1">
             <h1 style={{ marginBottom: "10px" }}>Members</h1>
-            <AlignItemsList
-              key={group?.members?.email ?? 0}
-              items={group?.members ?? null}
-            />
+            <AlignItemsList key={0} items={members ?? null} />
           </div>
         </div>
       </div>

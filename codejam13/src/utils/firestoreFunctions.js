@@ -13,6 +13,7 @@ import {
   getDocs,
   orderBy,
   limit,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -26,6 +27,12 @@ export const getExam = async (id) => {
   return docSnap.data();
 };
 
+export const deleteExam = async(id) =>{
+  const docRef = doc(db, "exams", id);
+  
+  await deleteDoc(docRef);
+  return id;
+}
 export const getAllExams = async () => {
   const querySnapshot = await getDocs(collection(db, "exams"));
   const docs = [];
@@ -83,6 +90,7 @@ export const getUser = async (id) => {
     return null;
   }
   const data = docSnap.data();
+  data.id = docSnap.id;
   return data;
 };
 
@@ -99,7 +107,6 @@ const getSummary = async (id) => {
 };
 
 export const createGroup = async (group) => {
-  console.log("group", group);
   const userRef = await addDoc(collection(db, "group"), group);
   // get user with group.owner as id and add group to user.groups
   const user = await getUser(group.owner);
@@ -131,16 +138,35 @@ export const getGroup = async (id) => {
 };
 
 export const addMember = async (id, memberId) => {
-  const docRef = doc(db, "groups", id);
+  console.log("user id", memberId);
+  // get group
+  const docRef = doc(db, "group", id);
   const docSnap = await getDoc(docRef);
   const group = docSnap.data();
-  const members = group?.members ?? [];
-  members.push(memberId);
-  await updateDoc(docRef, { members: members });
+  const newMembers = group?.members ?? [];
+  console.log("newMembers : " + newMembers + " vs " + memberId);
+  if (newMembers.find((member) => member === memberId)) {
+    return;
+  }
+  newMembers.push(memberId);
+
+  // update group
+  await updateDoc(docRef, { members: newMembers });
+  // get user
+  const user = await getUser(memberId);
+  const newGroups = user?.groups ?? [];
+  console.log("newGroups : " + newGroups + " vs " + id);
+  if (newGroups.find((group) => group === id)) {
+    return;
+  }
+  newGroups.push(id);
+
+  // update user
+  await updateDoc(doc(db, "users", memberId), { groups: newGroups });
 };
 
 export const removeMember = async (id, memberId) => {
-  const docRef = doc(db, "groups", id);
+  const docRef = doc(db, "group", id);
   const docSnap = await getDoc(docRef);
   const group = docSnap.data();
   const filteredMembers =
@@ -183,10 +209,10 @@ export const getUserIdByEmail = async (email) => {
 };
 
 export const getFirstNGroupsWithId = async (n) => {
-  const collectionRef = collection(db, "groups");
+  const collectionRef = collection(db, "group");
 
   try {
-    const querySnapshot = await getDocs(collectionRef.limit(n));
+    const querySnapshot = await getDocs(collectionRef, limit(n));
 
     const groups = [];
     querySnapshot.forEach((doc) => {
@@ -199,4 +225,33 @@ export const getFirstNGroupsWithId = async (n) => {
     console.error("Error getting groups:", error);
     return [];
   }
+};
+
+export const getFirstNExamsWithId = async (n) => {
+  const collectionRef = collection(db, "exams");
+
+  try {
+    const querySnapshot = await getDocs(collectionRef, limit(n));
+
+    const groups = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const groupWithId = { id: doc.id, ...data };
+      groups.push(groupWithId);
+    });
+    return groups;
+  } catch (error) {
+    console.error("Error getting exams:", error);
+    return [];
+  }
+};
+
+// query a users given a list of ids
+export const getUsersByIds = async (ids) => {
+  const userDocuments = await Promise.all(
+    ids.map(async (id) => {
+      return await getUser(id);
+    })
+  );
+  return userDocuments;
 };
