@@ -138,7 +138,7 @@ export default function MyExams() {
               {modalQ}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {modalA}
+              { modalA + "."}
             </Typography>
           </Box>
         </Modal>
