@@ -23,10 +23,7 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
   console.log(grades);
 
   function separateGradesAndDates(gradesArray) {
-    const gradesArr = gradesArray.map((item) => item.grade);
-    const gradesList = gradesArr.map((item) => {
-      return { data: [item] };
-    });
+    const gradesList = gradesArray.map((item) => item.grade);
     const datesList = gradesArray.map((item) => item.date);
 
     return { gradesList, datesList };
@@ -58,11 +55,12 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
         examData.grades.length;
       console.log(grades);
-      coloredGrades = datesList.gradesList.map((item) => ({
-        ...item, 
-        color: getColorForGrade(item.data[0]),
-      }));
-      console.log(coloredGrades)
+      // coloredGrades = datesList.gradesList.map((item) => ({
+      //   ...item, 
+      //   color: getColorForGrade(item.data[0]),
+      // }));
+      // console.log(coloredGrades)
+
     }
   }
 
@@ -75,7 +73,7 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
       {isGraphShown && grades.length > 0 ? (
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList.datesList }]}
-          series={coloredGrades}
+          series={[{data: datesList.gradesList}]}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
