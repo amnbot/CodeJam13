@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import SchoolIcon from "@mui/icons-material/School";
+
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import eventEmitter from "../services/EventEmitter";
@@ -76,6 +78,12 @@ const ResponsiveAppBar = () => {
           >
             <MenuIcon />
           </IconButton>
+          <div className="mx-10 inline-flex justify-center items-center">
+            <SchoolIcon />
+            <div className="mx-4 tracking-tight font-bold italic text-3xl">
+              Quizzler
+            </div>
+          </div>
           <Box
             sx={{
               flexGrow: 1,
@@ -93,7 +101,7 @@ const ResponsiveAppBar = () => {
           >
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="https://lh3.googleusercontent.com/a/ACg8ocKEGRrJNqRli1nzSOzog50Y20VUxt-fuBHRtBkIjZLf7cM=s96-c" />
               </IconButton>
             </Tooltip>
             <Menu

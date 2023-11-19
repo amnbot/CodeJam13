@@ -32,7 +32,7 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
   // State to control the visibility of the graph
 
   function getColorForGrade(grade) {
-    console.log(grade)
+    console.log(grade);
     if (grade > 80) {
       return "#79cc41"; // Green for high grades
     } else if (grade > 55) {
@@ -56,73 +56,82 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         examData.grades.length;
       console.log(grades);
       // coloredGrades = datesList.gradesList.map((item) => ({
-      //   ...item, 
+      //   ...item,
       //   color: getColorForGrade(item.data[0]),
       // }));
       // console.log(coloredGrades)
-
     }
   }
 
   return (
-    <div
-      className="bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between"
-    >
+    <div className="bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between">
       <h1 className="text-3xl font-bold">{title}</h1>
       {isGraphShown && grades.length > 0 ? (
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList.datesList }]}
-          series={[{data: datesList.gradesList}]}
+          series={[{ data: datesList.gradesList }]}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
           sx={{
             //change left yAxis label styles
-           "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
-            strokeWidth:"0.4",
-            fill:"white"
-           },
-           // change all labels fontFamily shown on both xAxis and yAxis
-           "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
-               fontFamily: "Roboto",
+            "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+              strokeWidth: "0.4",
+              fill: "white",
+            },
+            // change all labels fontFamily shown on both xAxis and yAxis
+            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel": {
+              fontFamily: "Roboto",
             },
             // change bottom label styles
-            "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
-                strokeWidth:"0.5",
-                fill:"white"
-             },
-              // bottomAxis Line Styles
-             "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-              stroke:"white",
-              strokeWidth:0.4
-             },
-             // leftAxis Line Styles
-             "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-              stroke:"white",
-              strokeWidth:0.4
-             }
+            "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+              strokeWidth: "0.5",
+              fill: "white",
+            },
+            // bottomAxis Line Styles
+            "& .MuiChartsAxis-bottom .MuiChartsAxis-line": {
+              stroke: "white",
+              strokeWidth: 0.4,
+            },
+            // leftAxis Line Styles
+            "& .MuiChartsAxis-left .MuiChartsAxis-line": {
+              stroke: "white",
+              strokeWidth: 0.4,
+            },
           }}
         />
       ) : (
         <div className="text-xl font-semibold ">
-          <p>
-            Most Recent Grade:{" "}
-            {mostRecentGrade ? mostRecentGrade.toFixed(2) + getGradeEmoji(mostRecentGrade) : "No results to show"}
-          </p>
-          <p>
-            Average Grade:{" "}
-            {averageGrade ? averageGrade.toFixed(2) + getGradeEmoji(averageGrade) : "No results to show"}
-          </p>{" "}
+          {mostRecentGrade ? (
+            <p>
+              Most Recent Grade:{" "}
+              {mostRecentGrade.toFixed(2) + getGradeEmoji(mostRecentGrade)}
+            </p>
+          ) : (
+            ""
+          )}
+          {averageGrade ? (
+            <p>
+              Average Grade:{" "}
+              {averageGrade.toFixed(2) + getGradeEmoji(averageGrade)}
+            </p>
+          ) : (
+            ""
+          )}
           <p>Attempts: {grades.length}</p>
         </div>
       )}
       <div className="inline-flex justify-between">
-        <button
-          onClick={onToggle}
-          className="bg-gray-900 hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300 w-[15%]"
-        >
-          {isGraphShown ? <VisibilityOffIcon /> : <BarChartIcon />}
-        </button>
+        {grades && grades.length > 0 ? (
+          <button
+            onClick={onToggle}
+            className="bg-gray-900 hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300 w-[15%]"
+          >
+            {isGraphShown ? <VisibilityOffIcon /> : <BarChartIcon />}
+          </button>
+        ) : (
+          <div></div>
+        )}
         <div className="inline-flex justify-end">
           <button
             onClick={goToExam}

@@ -81,7 +81,6 @@ export default function SwipeableTemporaryDrawer() {
       <Box
         sx={{
           display: "flex",
-          height: "40px",
           marginTop: "30px",
           padding: "7px",
         }}
@@ -101,23 +100,9 @@ export default function SwipeableTemporaryDrawer() {
               fontSize: "30px",
             }}
           />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            QUIZIZI
-          </Typography>
+          <div className="mx-4 tracking-tight font-bold italic text-3xl">
+              Quizzler
+            </div>
         </Box>
         <IconButton
           size="large"
