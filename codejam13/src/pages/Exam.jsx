@@ -78,8 +78,7 @@ export default function Exam() {
       const newOptions = questions.map((question) => {
         var { choices, answer } = question;
         if (choices.includes(answer)) {
-          const idx = choices.indexOf(answer);
-          choices = choices.splice(idx, 1)
+          return [...choices]
         }
         return [...choices, answer];
       });
