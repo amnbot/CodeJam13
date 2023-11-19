@@ -15,17 +15,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+
 const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'black',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-  
+  backgroundColor: 'rgb(30,41,59)', // Set your desired background color
+  borderRadius: 8, // Add rounded corners
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Adjusted shadow for a subtle effect
+  padding: 5, // Increased padding for better spacing
+  textAlign: 'center', // Center content horizontally
 };
 
 export default function MyExams() {
