@@ -12,6 +12,7 @@ import {
   getFirstNGroupsWithId,
   getFirstNExamsWithId,
 } from "../utils/firestoreFunctions";
+import RecommandationExam from "../components/RecommandationExam";
 
 export default function Community() {
   const [groups, setGroups] = useState([]);
@@ -49,6 +50,7 @@ export default function Community() {
           className="col-span-1"
           style={{
             padding: "20px",
+            height: "max-content",
           }}
         >
           <div
@@ -61,7 +63,6 @@ export default function Community() {
             <Container
               sx={{
                 py: 6,
-                maxHeight: "70vh",
                 display: "block",
               }}
             >
@@ -84,13 +85,12 @@ export default function Community() {
             <Container
               sx={{
                 py: 6,
-                maxHeight: "70vh",
                 display: "block",
               }}
             >
               <Grid container spacing={4}>
-                {exams.map((group) => (
-                  <RecommandationGroup key={group.id} item={group} />
+                {exams.map((exam) => (
+                  <RecommandationExam key={exam.id} item={exam} />
                 ))}
               </Grid>
             </Container>
