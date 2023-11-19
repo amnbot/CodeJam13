@@ -17,9 +17,9 @@ export default function Exam() {
   const [answers, setAnswers] = useState([]);
 
   const [options, setOptions] = useState([]);
-  const [grade, setGrade] = useState(70);
+  const [grade, setGrade] = useState(-1);
 
-  const [showResult, setShowResult] = useState(true);
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -39,7 +39,6 @@ export default function Exam() {
         return [...choices, answer];
       });
       setOptions(newOptions);
-      console.log("results: ", exam.results);
     }
   }, [exam]);
 
@@ -47,11 +46,12 @@ export default function Exam() {
     console.log(answers);
     const grade = computeGrade();
     setGrade(grade);
+    console.log('adding exam')
     const res = await addExamResult(id, grade);
-    setExam({
-      ...exam,
-      results: [...exam.results, res],
-    });
+    // setExam({
+    //   ...exam,
+    //   results: [...exam.results, res],
+    // });
   };
 
   useEffect(() => {
