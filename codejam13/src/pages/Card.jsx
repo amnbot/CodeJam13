@@ -60,8 +60,8 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
       </button>
       {grades.length > 0 && isGraphShown ? 
         <BarChart
-          xAxis={[{ scaleType: "band", data: datesList }]}
-          series={gradesList}
+          xAxis={[{ scaleType: "band", data: datesList.datesList}]}
+          series={datesList.gradesList}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
