@@ -1,5 +1,5 @@
-const { mcqPrompt } = require("./const");
-const {generateQuestions, parseMCQ} = require("./func");
+const { mcqPrompt, tfPrompt, numPrompt } = require("./const");
+const {generateQuestions, parseMCQ, parseTF, parseNum} = require("./func");
 
 /*
 Function that returns questions in the following format:
@@ -39,9 +39,20 @@ const createQuestions = async (body) => {
   }
   if (body.trueOrFalseQuestions > 0) {
     // prompt = setPrompt(body.numberOfQuestions, "tf");
+    prompt = tfPrompt(body.trueOrFalseQuestions);
+    const output = await generateQuestions(prompt, body.input);
+    const tf = parseTF(output);
+    questions = {...questions, trueOrFalse: tf.trueOrFalse};
+    console.log(questions);
   }
   if (body.numericalQuestions > 0) {
     // prompt = setPrompt(body.numberOfQuestions, "num");
+    // prompt = numPrompt(body.numericalQuestions);
+    // const output = await generateQuestions(prompt, body.input);
+    // const num = parseNum(output);
+    // questions = {...questions, numerical: num.numerical};
+    // console.log(questions);
+    console.log('not doing it lol')
   }
 
   return questions

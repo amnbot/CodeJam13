@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card"; // Adjust the path as per your project structure
 import { getAllExams } from "../utils/firestoreFunctions";
 
-const CardGrid = ({ cardsfd }) => {
+const CardGrid = () => {
   const [allExams, setAllExams] = useState([]);
 
   useEffect(() => {

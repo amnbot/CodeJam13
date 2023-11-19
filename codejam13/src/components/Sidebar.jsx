@@ -15,16 +15,23 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import SchoolIcon from '@mui/icons-material/School';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import GroupsIcon from '@mui/icons-material/Groups';
+import PublicIcon from '@mui/icons-material/Public';
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function SwipeableTemporaryDrawer() {
   const pages = ["Dashboard", "My Exams", "Create Exams"];
   const links = ["/", "/my-exams", "/create-exam"];
+  const icons = [<DashboardIcon />, <SchoolIcon />, <LibraryBooksIcon />]
 
   const secondPages = ["My Groups", "Communuty"];
   const secondLinks = ["/my-groups", "/community"];
+  const secondIcons = [<GroupsIcon />, <PublicIcon />]
 
   var isOpen = false;
 
@@ -87,7 +94,7 @@ export default function SwipeableTemporaryDrawer() {
             paddingRight: "10px",
           }}
         >
-          <AdbIcon
+          <SchoolIcon
             sx={{
               display: { xs: "none", md: "flex" },
               mr: 1,
@@ -109,7 +116,7 @@ export default function SwipeableTemporaryDrawer() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            QUIZIZI
           </Typography>
         </Box>
         <IconButton
@@ -128,7 +135,7 @@ export default function SwipeableTemporaryDrawer() {
             <ListItem key={text}>
               <ListItemButton sx={{ justifyContent: "center" }}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {icons[index]}
                 </ListItemIcon>
                 <ListItemText
                   sx={{ fontSize: "50px" }}
@@ -145,7 +152,7 @@ export default function SwipeableTemporaryDrawer() {
             <ListItem key={text}>
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {secondIcons[index]}
                 </ListItemIcon>
                 <ListItemText
                   primary={text}

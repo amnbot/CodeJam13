@@ -64,7 +64,6 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
     }
   }
 
-  console.log(datesList);
   return (
     <div
       className="bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between"
@@ -77,12 +76,38 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
+          sx={{
+            //change left yAxis label styles
+           "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
+            strokeWidth:"0.4",
+            fill:"white"
+           },
+           // change all labels fontFamily shown on both xAxis and yAxis
+           "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+               fontFamily: "Roboto",
+            },
+            // change bottom label styles
+            "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
+                strokeWidth:"0.5",
+                fill:"white"
+             },
+              // bottomAxis Line Styles
+             "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+              stroke:"white",
+              strokeWidth:0.4
+             },
+             // leftAxis Line Styles
+             "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+              stroke:"white",
+              strokeWidth:0.4
+             }
+          }}
         />
       ) : (
         <div className="text-xl font-semibold ">
           <p>
             Most Recent Grade:{" "}
-            {mostRecentGrade ? mostRecentGrade + getGradeEmoji(mostRecentGrade) : "No results to show"}
+            {mostRecentGrade ? mostRecentGrade.toFixed(2) + getGradeEmoji(mostRecentGrade) : "No results to show"}
           </p>
           <p>
             Average Grade:{" "}

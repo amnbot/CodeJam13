@@ -79,7 +79,7 @@ export default function MyExams() {
   if (exam) {
     return (
       <div>
-        <div> <label>Exam name: </label>
+        <div className="p-6 m-4 border rounded-lg space-x-4"> <label>Exam name: </label>
           <input
             style={{
               width: '50%',
@@ -99,15 +99,16 @@ export default function MyExams() {
           <button onClick={editClick}><EditIcon /></button>
           <button onClick={saveClick}><SaveIcon /> </button>
         </div>
-        <div>
+        <div className="p-6 m-4 border rounded-lg space-y-4 space-x-4">
           <CardSingle
             title={"Grade Progression"}
             grades={exam.results}
             alwaysShow={true}
           ></CardSingle>
         </div>
+        
+        <div className="p-6 m-4 border rounded-lg space-y-4" >
         <Typography variant="h3">Flashcards</Typography>
-        <div>
           <Grid
             container
             spacing={{ xs: 2, md: 3 }}
@@ -115,22 +116,23 @@ export default function MyExams() {
           >
             {exam.multipleChoice.map((questionData, index) => (
               <Grid item xs={2} sm={4} md={4} key={index}>
-                <button onClick={() => questionButton(questionData)}>{questionData.question}</button>
+                <button className="px-8 py-4 text-base rounded-md focus:outline-none focus:shadow-outline bg-gris-cool" onClick={() => questionButton(questionData)}>{questionData.question}</button>
               </Grid>
             ))}
           </Grid>
         </div>
 
-        <div>
-        <button onClick={() => navigate(`/exam/${id}`)} >
+        <div className="p-6 m-4 border rounded-lg space-y-4 space-x-4">
+          <Typography variant="h3">Options</Typography>
+        <button className="bg-green-500" onClick={() => navigate(`/exam/${id}`)} >
           <HistoryEduIcon />
         </button>
 
-        <button onClick={() => navigate(`/my-exams`)}>
+        <button className="bg-yellow-500" onClick={() => navigate(`/my-exams`)}>
           <ArrowBackIcon />
         </button>
  
-        <button onClick= {() => {deleteExam(id);navigate(`/my-exams`) }}> <DeleteIcon /></button>
+        <button className="bg-red-500" onClick= {() => {deleteExam(id);navigate(`/my-exams`) }}> <DeleteIcon /></button>
         </div>
 
         <Modal
@@ -144,7 +146,7 @@ export default function MyExams() {
               {modalQ}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              { modalA + "."}
+              { modalA }
             </Typography>
           </Box>
         </Modal>

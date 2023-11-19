@@ -63,7 +63,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ padding: 0 }}>
+    <AppBar position="static" sx={{ padding: 0, background: "rgb(15 23 42)" }}>
       <Container maxWidth="xxl">
         <Toolbar disableGutters>
           <IconButton
@@ -72,7 +72,7 @@ const ResponsiveAppBar = () => {
             color="inherit"
             aria-label="menu"
             onClick={() => handleOpenNavBar()}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, background: "rgb(15 23 42)" }}
           >
             <MenuIcon />
           </IconButton>
