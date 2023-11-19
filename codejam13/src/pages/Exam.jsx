@@ -118,7 +118,7 @@ export default function Exam() {
         />
         <button
           onClick={() => {
-            navigate(`/exam/${id}`);
+            navigate(0);
           }}
         >
           Retry
