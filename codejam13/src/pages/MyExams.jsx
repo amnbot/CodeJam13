@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 //import {TERipple} from 'tw-elements-react';
 import Container from "react-bootstrap/Container";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -14,6 +14,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+
 
 const modalStyle = {
   position: 'absolute',
@@ -21,10 +24,11 @@ const modalStyle = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+  backgroundColor: 'rgb(30,41,59)', // Set your desired background color
+  borderRadius: 8, // Add rounded corners
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Adjusted shadow for a subtle effect
+  padding: 5, // Increased padding for better spacing
+  textAlign: 'center', // Center content horizontally
 };
 
 export default function MyExams() {
@@ -37,6 +41,8 @@ export default function MyExams() {
   const handleClose = () => setOpen(false);
   
   
+
+  const navigate = useNavigate();
   
   function editClick(){
     setDisabled(false);
@@ -69,14 +75,25 @@ export default function MyExams() {
   if (exam) {
     return (
       <div>
-        <div>
+        <div> <label>Exam name: </label>
           <input
+            style={{
+              width: '50%',
+              padding: '10px',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              border: 'none',
+              borderBottom: '2px solid #333',
+              outline: 'none',
+              margin: '10px 0',
+              textAlign:'center'
+            }}
             defaultValue={exam.name}
             disabled={disabled}
             onChange={(e) => setName(e.target.value)}
           ></input>{" "}
-          <button onClick={editClick}>Edit name</button>
-          <button onClick={saveClick}>Save </button>
+          <button onClick={editClick}><EditIcon /></button>
+          <button onClick={saveClick}><SaveIcon /> </button>
         </div>
         <div>
           <CardSingle
@@ -100,6 +117,16 @@ export default function MyExams() {
           </Grid>
         </div>
 
+        <div>
+        <Button onClick={() => navigate(`/exam/${id}`)} variant="contained" size="large">
+          Attempt Exam
+        </Button>
+
+        <Button onClick={() => navigate(`/my-exams`)} variant="contained" size="large">
+          Back
+        </Button>
+        </div>
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -111,7 +138,7 @@ export default function MyExams() {
               {modalQ}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {modalA}
+              { modalA + "."}
             </Typography>
           </Box>
         </Modal>

@@ -16,6 +16,7 @@ import CardGrid from "./pages/CardGrid";
 import MyGroups from "./pages/MyGroups";
 import Group from "./pages/Group";
 import Community from "./pages/Community";
+import UserExams from "./pages/UserExams";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,7 +37,7 @@ function App() {
           <Route path="/create-exam" element={<CreateExam />} exact />
           <Route exact path="/exam/:id" element={<Exam />} />
           <Route exact path="/my-exams/:id" element={<MyExams />} />
-          <Route exact path="/my-exams" element={<CardGrid />} />
+          <Route exact path="/my-exams" element={<UserExams />} />
           <Route path="/my-groups" element={<MyGroups />} exact />
           <Route exact path="/group/:id" element={<Group />} />
           <Route exact path="/my-group/:id" element={<MyGroups />} />

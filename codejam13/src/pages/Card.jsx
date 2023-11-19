@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useNavigate } from "react-router-dom";
+import { getGradeEmoji } from "../utils/utils";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
   const navigate = useNavigate();
@@ -29,11 +34,22 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
 
   // State to control the visibility of the graph
 
+  function getColorForGrade(grade) {
+    console.log(grade)
+    if (grade > 80) {
+      return "#79cc41"; // Green for high grades
+    } else if (grade > 55) {
+      return "#cc8441"; // Orange for medium grades
+    } else {
+      return "#cc5641"; // Red for low grades
+    }
+  }
   // Calculate the most recent grade and average grade
   let mostRecentGrade = NaN;
   let averageGrade = NaN;
   let gradesList = [];
   let datesList = [];
+  let coloredGrades = [];
   if (grades !== undefined) {
     if (grades.length > 0) {
       gradesList, (datesList = separateGradesAndDates(examData.grades));
@@ -42,49 +58,63 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
         examData.grades.length;
       console.log(grades);
+      coloredGrades = datesList.gradesList.map((item) => ({
+        ...item, 
+        color: getColorForGrade(item.data[0]),
+      }));
+      console.log(coloredGrades)
     }
   }
+
   console.log(datesList);
   return (
     <div
-      style={{
-        background: "gray",
-        margin: "1rem",
-        padding: "1rem",
-        borderRadius: "0.5rem",
-        minHeight: "250px", // Set a minimum height
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-      className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300"
+      className="bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between"
     >
-      <h1>{title}</h1>
-      <button onClick={onToggle}>
-        {isGraphShown ? "Hide Graph" : "Show Graph"}
-      </button>
+      <h1 className="text-3xl font-bold">{title}</h1>
       {isGraphShown && grades.length > 0 ? (
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList.datesList }]}
-          series={datesList.gradesList}
+          series={coloredGrades}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
         />
       ) : (
-        <div>
+        <div className="text-xl font-semibold ">
           <p>
             Most Recent Grade:{" "}
-            {mostRecentGrade ? mostRecentGrade : "No results to show"}
+            {mostRecentGrade ? mostRecentGrade + getGradeEmoji(mostRecentGrade) : "No results to show"}
           </p>
           <p>
             Average Grade:{" "}
-            {averageGrade ? averageGrade.toFixed(2) : "No results to show"}
+            {averageGrade ? averageGrade.toFixed(2) + getGradeEmoji(averageGrade) : "No results to show"}
           </p>{" "}
+          <p>Attempts: {grades.length}</p>
         </div>
       )}
-      <button onClick={goToExam}>Attempt Exam</button>
-      <button onClick={() => navigate(`/my-exams/${examId}`)}>Details</button>
+      <div className="inline-flex justify-between">
+        <button
+          onClick={onToggle}
+          className="bg-gray-900 hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300 w-[15%]"
+        >
+          {isGraphShown ? <VisibilityOffIcon /> : <BarChartIcon />}
+        </button>
+        <div className="inline-flex justify-end">
+          <button
+            onClick={goToExam}
+            className="bg-gray-900 hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300 w-[45%] m-1 items-center"
+          >
+            <HistoryEduIcon />
+          </button>
+          <button
+            onClick={() => navigate(`/my-exams/${examId}`)}
+            className="bg-gray-900 hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300 w-[45%] m-1 items-center"
+          >
+            <MoreHorizIcon />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
