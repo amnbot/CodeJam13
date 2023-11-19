@@ -29,7 +29,7 @@ export default function SwipeableTemporaryDrawer() {
   const links = ["/", "/my-exams", "/create-exam"];
   const icons = [<DashboardIcon />, <SchoolIcon />, <LibraryBooksIcon />]
 
-  const secondPages = ["My Groups", "Communuty"];
+  const secondPages = ["My Groups", "Community"];
   const secondLinks = ["/my-groups", "/community"];
   const secondIcons = [<GroupsIcon />, <PublicIcon />]
 
