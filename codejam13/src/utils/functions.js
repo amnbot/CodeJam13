@@ -10,9 +10,11 @@ function calculateAverage(arr) {
 
 
 function extractNameAndResults(inputArray) {
-    return inputArray.map(item => ({
+    const filteredArray = inputArray.filter(item => item.name !== undefined && item.results !== undefined);
+
+    return filteredArray.map(item => ({
         name: item.name,
-        results: calculateAverage(item.results)
+        results: calculateAverage(item.results) 
     }));
 }
 function separateNamesAndResults(inputArray) {
