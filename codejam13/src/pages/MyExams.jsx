@@ -6,12 +6,33 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { getAllExams, getExam, updateExamName } from '../utils/firestoreFunctions';
 import CardSingle from './CardSingle';
 import { cardActionAreaClasses } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function MyExams() {
 
   let { id } = useParams();
   const [exam, setExam] = useState(null);
   const [disabled, setDisabled] = useState(true);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
   
   
   function editClick(){
@@ -22,6 +43,14 @@ export default function MyExams() {
     updateExamName(id, name);
     setDisabled(true);
   }
+  const [modalQ, setModalQ] = useState("");
+  const [modalA, setModalA] = useState("");
+  function questionButton(data){
+    handleOpen();
+    setModalQ(data.question);
+    setModalA(data.answer);
+
+  }
   useEffect(() => {
     getExam(id)
       .then((res) => setExam(res))
@@ -30,9 +59,9 @@ export default function MyExams() {
 
   const [name, setName] = useState(exam ? exam.name : '');
   
-  useEffect(() => {
+  /*useEffect(() => {
    if(exam) console.log(exam);
-  }, [exam]);
+  }, [exam]);*/
   
   if(exam){
     return (
@@ -56,13 +85,6 @@ export default function MyExams() {
                           id="button-search">
                           Search
                       </button>
-
-                      <button
-                          className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
-                          type="button"
-                          id="button-add">
-                          +
-                      </button>
                       
                   </div>
 
@@ -76,12 +98,28 @@ export default function MyExams() {
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                       {exam.multipleChoice.map((questionData, index) => (
                         <Grid item xs={2} sm={4} md={4} key={index}>
-                          <p>{questionData.question}</p>
+                          <button onClick={() => questionButton(questionData)}>{questionData.question}</button>
                         </Grid>
                       ))}
                     </Grid>
 
                   </div>
+
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={modalStyle}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2" >
+                        {modalQ}
+                      </Typography>
+                      <Typography  id="modal-modal-description" sx={{ mt: 2 }}>
+                        {modalA}
+                      </Typography>
+                    </Box>
+                  </Modal>
         
       </div>
       
