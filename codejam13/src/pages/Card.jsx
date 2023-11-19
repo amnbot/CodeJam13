@@ -15,7 +15,7 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
     navigate("/exam/aHC6uvngGJQTkyrAmbKM");
   };
 
-  console.log(grades)
+  console.log(grades);
 
   function separateGradesAndDates(gradesArray) {
     const gradesArr = gradesArray.map((item) => item.grade);
@@ -30,20 +30,21 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
   // State to control the visibility of the graph
 
   // Calculate the most recent grade and average grade
-  let mostRecentGrade = NaN
-  let averageGrade = NaN
-  let gradesList = []
-  let datesList = []
-  if (grades.length > 0){
-    gradesList, datesList = separateGradesAndDates(examData.grades);
-    mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
-    averageGrade =
-    examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
-    examData.grades.length;
-    console.log(grades)
+  let mostRecentGrade = NaN;
+  let averageGrade = NaN;
+  let gradesList = [];
+  let datesList = [];
+  if (grades !== undefined) {
+    if (grades.length > 0) {
+      gradesList, (datesList = separateGradesAndDates(examData.grades));
+      mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
+      averageGrade =
+        examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
+        examData.grades.length;
+      console.log(grades);
+    }
   }
-  console.log(datesList)
-
+  console.log(datesList);
   return (
     <div
       style={{
@@ -61,20 +62,20 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
       <button onClick={onToggle}>
         {isGraphShown ? "Hide Graph" : "Show Graph"}
       </button>
-      {isGraphShown && grades.length > 0 ? 
+      {isGraphShown && grades.length > 0 ? (
         <BarChart
-          xAxis={[{ scaleType: "band", data: datesList.datesList}]}
+          xAxis={[{ scaleType: "band", data: datesList.datesList }]}
           series={datesList.gradesList}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
         />
-       : 
+      ) : (
         <div>
           <p>Most Recent Grade: {mostRecentGrade}</p>
           <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
         </div>
-      }
+      )}
       <button onClick={goToExam}>Attempt Exam</button>
     </div>
   );
