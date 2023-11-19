@@ -4,6 +4,7 @@ import { addExamResult, getExam } from "../utils/firestoreFunctions";
 import QuestionCard from "../components/Question";
 import CardSingle from "./CardSingle";
 import { useNavigate } from "react-router-dom";
+import { ArrowRightRounded, ArrowLeftRounded } from "@mui/icons-material";
 
 export default function Exam() {
   const navigate = useNavigate();
@@ -49,15 +50,14 @@ export default function Exam() {
     setExam({
       ...exam,
       results: [...exam.results, res],
-    })
+    });
   };
 
   useEffect(() => {
     if (grade !== -1) {
       setShowResult(true);
     }
-  }, [grade])
-  
+  }, [grade]);
 
   const computeGrade = () => {
     let correct = 0;
@@ -74,7 +74,7 @@ export default function Exam() {
       <div>
         <div className="grid grid-cols-5 text-left">
           <div className="col-span-1">
-            <div className="grid grid-cols-3 gap-y-4 text-left">
+            <div className="grid grid-cols-2 gap-y-4 gap-x-0 text-left">
               {exam.multipleChoice.map((question, index) => (
                 <div key={index}>
                   <button onClick={() => setCurrQuestionIndex(index)}>
@@ -82,6 +82,20 @@ export default function Exam() {
                   </button>
                 </div>
               ))}
+            </div>
+            <div className="flex justify-around my-16">
+              <button
+                disabled={currQuestionIndex === 0}
+                onClick={() => setCurrQuestionIndex(currQuestionIndex - 1)}
+              >
+                <ArrowLeftRounded />
+              </button>
+              <button
+                disabled={currQuestionIndex === exam.multipleChoice.length - 1}
+                onClick={() => setCurrQuestionIndex(currQuestionIndex + 1)}
+              >
+                <ArrowRightRounded />
+              </button>
             </div>
           </div>
           <div className="col-span-4">
@@ -92,16 +106,19 @@ export default function Exam() {
               answers={answers}
               questionIndex={currQuestionIndex}
             />
+            <div className="m-5 space-x-5 justify-evenly flex">
+              <button onClick={() => navigate('/my-exams')}>
+                Quit
+              </button>
+              <button
+                disabled={answers.includes(-1)}
+                onClick={handleSubmit}
+                className=""
+              >
+                Submit
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="m-5">
-          <button
-            disabled={answers.includes(-1)}
-            onClick={handleSubmit}
-            className="bg-gray-700"
-          >
-            Submit
-          </button>
         </div>
       </div>
     );
