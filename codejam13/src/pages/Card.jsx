@@ -82,7 +82,7 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         <div className="text-xl font-semibold ">
           <p>
             Most Recent Grade:{" "}
-            {mostRecentGrade ? mostRecentGrade + getGradeEmoji(mostRecentGrade) : "No results to show"}
+            {mostRecentGrade ? mostRecentGrade.toFixed(2) + getGradeEmoji(mostRecentGrade) : "No results to show"}
           </p>
           <p>
             Average Grade:{" "}

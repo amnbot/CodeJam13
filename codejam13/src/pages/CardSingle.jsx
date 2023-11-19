@@ -74,7 +74,7 @@ const Card = ({ title, grades, alwaysShow = false }) => {
             />
           ) : (
             <div>
-              <p>Most Recent Grade: {mostRecentGrade}</p>
+              <p>Most Recent Grade: {mostRecentGrade.toFixed(2)}</p>
               <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
             </div>
           )}
