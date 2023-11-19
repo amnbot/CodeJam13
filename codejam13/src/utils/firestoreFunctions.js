@@ -30,7 +30,7 @@ export const getAllExams = async () => {
   const querySnapshot = await getDocs(collection(db, "exams"));
   const docs = [];
   querySnapshot.forEach((doc) => {
-    docs.push({...doc.data(), id: doc.id});
+    docs.push({ ...doc.data(), id: doc.id });
   });
 
   return docs;
@@ -45,7 +45,14 @@ export const updateExamName = async (id, newName) => {
 export const addExamResult = async (id, grade) => {
   const docRef = doc(db, "exams", id);
   // const docSnap = await getDoc(docRef);
-  const result = { grade, date: Timestamp.now().toDate().toLocaleDateString() };
+  const date = Timestamp.now().toDate();
+  const month = date.getUTCMonth();
+  const year = date.getUTCFullYear();
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const timestamp = `${year}-${month}-${day}-${hours}-${minutes}`;
+  const result = { grade, date: timestamp };
   await updateDoc(docRef, { results: arrayUnion(result) });
   return result;
 };
@@ -117,15 +124,13 @@ export const removeMember = async (id, memberId) => {
   await updateDoc(docRef, { members: filteredMembers });
 };
 
-export const getnRecent = async(n) => {
+export const getnRecent = async (n) => {
   docs = [];
   const querySnapshot = await getDocs(collection(db, "exams"), limit(n));
 
-  querySnapshot.forEach((doc) =>{
-    docs.push({...doc.data(), id: doc.id});
+  querySnapshot.forEach((doc) => {
+    docs.push({ ...doc.data(), id: doc.id });
   });
 
   return docs;
-
-}
-
+};
