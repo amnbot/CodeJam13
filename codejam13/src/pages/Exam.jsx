@@ -202,7 +202,7 @@ export default function Exam() {
     return (
       <div className="m-4">
         <h2 className="text-3xl my-4">
-          Grade: {grade}% {getGradeEmoji(grade)}
+          Grade: {grade.toFixed(2)}% {getGradeEmoji(grade)}
         </h2>
         <CardSingle
           alwaysShow={true}
