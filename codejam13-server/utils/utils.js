@@ -47,11 +47,12 @@ const createQuestions = async (body) => {
   }
   if (body.numericalQuestions > 0) {
     // prompt = setPrompt(body.numberOfQuestions, "num");
-    prompt = numPrompt(body.numericalQuestions);
-    const output = await generateQuestions(prompt, body.input);
-    const num = parseNum(output);
-    questions = {...questions, numerical: num.numerical};
-    console.log(questions);
+    // prompt = numPrompt(body.numericalQuestions);
+    // const output = await generateQuestions(prompt, body.input);
+    // const num = parseNum(output);
+    // questions = {...questions, numerical: num.numerical};
+    // console.log(questions);
+    console.log('not doing it lol')
   }
 
   return questions
