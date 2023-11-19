@@ -57,10 +57,9 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         flexDirection: "column",
         justifyContent: "space-between",
       }}
-      className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300"
     >
       <h1>{title}</h1>
-      <button onClick={onToggle}>
+      <button onClick={onToggle} className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300">
         {isGraphShown ? "Hide Graph" : "Show Graph"}
       </button>
       {isGraphShown && grades.length > 0 ? (
@@ -83,8 +82,8 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
           </p>{" "}
         </div>
       )}
-      <button onClick={goToExam}>Attempt Exam</button>
-      <button onClick={() => navigate(`/my-exams/${examId}`)}>Details</button>
+      <button onClick={goToExam} className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300">Attempt Exam</button>
+      <button onClick={() => navigate(`/my-exams/${examId}`)} className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300">Details</button>
     </div>
   );
 };

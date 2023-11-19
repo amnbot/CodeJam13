@@ -43,7 +43,7 @@ const Card = ({ title, grades, alwaysShow = false }) => {
   if (grades) {
     if (grades.length > 0) {
       return (
-        <div className="bg-gray-700 m-4 rounded-3xl p-4">
+        <div style={{ display: 'inline-block', margin: 'auto' }} className="bg-gray-700 m-4 rounded-3xl p-4">
           <h1 className="text-3xl italic">{examData.title}</h1>
           {!alwaysShow ? (
             <button onClick={() => setShowGraph(!showGraph)}>
