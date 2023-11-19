@@ -3,7 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { addExamResult, getExam } from "../utils/firestoreFunctions";
 import QuestionCard from "../components/Question";
 import CardSingle from "./CardSingle";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Exam() {
   const navigate = useNavigate();
@@ -17,11 +17,17 @@ export default function Exam() {
   const [options, setOptions] = useState([]);
   const [grade, setGrade] = useState(-1);
 
+  const [showResult, setShowResult] = useState(false);
+
   useEffect(() => {
-    getExam(id)
-      .then((res) => setExam(res))
-      .catch((err) => console.log(err));
-  }, []);
+    if (id !== undefined) {
+      getExam(id)
+        .then((res) => {
+          setExam(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [id]);
 
   useEffect(() => {
     if (exam) {
@@ -31,7 +37,7 @@ export default function Exam() {
         return [...choices, answer];
       });
       setOptions(newOptions);
-      console.log('results: ', exam.results)
+      console.log("results: ", exam.results);
     }
   }, [exam]);
 
@@ -39,8 +45,19 @@ export default function Exam() {
     console.log(answers);
     const grade = computeGrade();
     setGrade(grade);
-    addExamResult(id, grade);
+    const res = await addExamResult(id, grade);
+    setExam({
+      ...exam,
+      results: [...exam.results, res],
+    })
   };
+
+  useEffect(() => {
+    if (grade !== -1) {
+      setShowResult(true);
+    }
+  }, [grade])
+  
 
   const computeGrade = () => {
     let correct = 0;
@@ -94,20 +111,27 @@ export default function Exam() {
     return (
       <div>
         <h2 className="text-3xl">Grade: {grade}%</h2>
-        <CardSingle alwaysShow={true} grades={exam.results} title={"Your grades"} />
-        <button onClick={() => {
-          navigate(`/exam/${id}`)
-          }}>Retry</button>
+        <CardSingle
+          alwaysShow={true}
+          grades={exam.results}
+          title={"Your grades"}
+        />
+        <button
+          onClick={() => {
+            navigate(`/exam/${id}`);
+          }}
+        >
+          Retry
+        </button>
       </div>
-    )
-  }
+    );
+  };
 
-  console.log(exam);
   if (exam && options.length > 0) {
     return (
       <div className="mx-64">
         <h1 className="m-4">{exam.name}</h1>
-        {grade === -1 ? examUI() : resultUI()}
+        {!showResult ? examUI() : resultUI()}
       </div>
     );
   }

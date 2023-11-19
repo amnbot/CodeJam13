@@ -45,6 +45,7 @@ export const addExamResult = async (id, grade) => {
   // const docSnap = await getDoc(docRef);
   const result = { grade, date: Timestamp.now().toDate().toLocaleDateString() };
   await updateDoc(docRef, { results: arrayUnion(result) });
+  return result;
 };
 
 export const addExamQuestions = async (id, newQ) => {
