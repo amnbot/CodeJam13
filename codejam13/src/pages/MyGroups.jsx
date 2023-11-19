@@ -98,11 +98,11 @@ export default function MyGroups() {
                 height: "80px",
               }}
             >
-              Recommandations
+              Recommendations
             </span>
             <Container
               sx={{
-                py: 0,
+                paddingBottom: "20px",
               }}
             >
               <Grid container spacing={4}>

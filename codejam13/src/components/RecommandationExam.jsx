@@ -62,7 +62,7 @@ const RecommandationExam = (value) => {
         </CardContent>
         <CardActions sx={{ justifyContent: "center" }}>
           <Button onClick={() => join(exam.id)} size="large">
-            Join
+            Add
           </Button>
         </CardActions>
       </Card>
