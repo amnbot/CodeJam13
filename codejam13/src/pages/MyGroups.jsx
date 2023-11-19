@@ -4,36 +4,17 @@ import { Container, Grid, Card } from "@mui/material";
 import GroupTemplate from "../components/GroupTemplate";
 import { useEffect } from "react";
 import RecommandationGroup from "../components/RecommandationGroup";
-import { createGroup, getGroup } from "../utils/firestoreFunctions";
+import {
+  createGroup,
+  getGroup,
+  getFirstNGroupsWithId,
+} from "../utils/firestoreFunctions";
 import { useState } from "react";
 import { getCurrentUser } from "../services/AuthContext";
-import { async } from "@firebase/util";
 
 export default function MyGroups() {
-  const mockGroup = [
-    {
-      name: "COMP 360",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Aymen",
-      id: "1",
-    },
-    {
-      name: "COMP 206",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Andrew",
-      id: "2",
-    },
-    {
-      name: "COMP 360",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Aymen",
-      id: "3",
-    },
-  ];
   const [group, setGroup] = useState([]);
+  const [recommandations, setRecommandations] = useState([]);
 
   //   const group = {
   //     name: "COMP 206",
@@ -58,6 +39,9 @@ export default function MyGroups() {
           setGroup(list);
         });
       }
+    });
+    getFirstNGroupsWithId(6).then((res) => {
+      setRecommandations(res);
     });
   }, []);
 
@@ -122,7 +106,7 @@ export default function MyGroups() {
               }}
             >
               <Grid container spacing={4}>
-                {mockGroup.map((group) => (
+                {recommandations.map((group) => (
                   <RecommandationGroup key={group.id} item={group} />
                 ))}
               </Grid>

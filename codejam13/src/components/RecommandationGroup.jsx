@@ -20,6 +20,7 @@ const defaultTheme = createTheme();
 
 const RecommandationGroup = (value) => {
   const group = value.item;
+  console.log(group);
 
   const navigate = useNavigate();
 
