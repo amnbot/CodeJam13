@@ -27,38 +27,44 @@ const Card = ({ title, grades, alwaysShow = false }) => {
   let averageGrade = NaN;
   let gradesList = [];
   let datesList = [];
-  if (grades.length > 0) {
-    gradesList, (datesList = separateGradesAndDates(examData.grades));
-    // Calculate the most recent grade and average grade
-    mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
-    averageGrade =
-    examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
-    examData.grades.length;
+  if (grades !== undefined) {
+    if (grades.length > 0) {
+      gradesList, (datesList = separateGradesAndDates(examData.grades));
+      // Calculate the most recent grade and average grade
+      mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
+      averageGrade =
+        examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
+        examData.grades.length;
+    }
   }
-  return (
-    <div className="bg-gray-700 m-4 rounded-3xl p-4">
-      <h1 className="text-3xl italic">{examData.title}</h1>
-      {!alwaysShow ? (
-        <button onClick={() => setShowGraph(!showGraph)}>
-          {showGraph ? "Hide Graph" : "Show Graph"}
-        </button>
-      ) : null}
-      {showGraph && grades.length > 0? (
-        <BarChart
-          xAxis={[{ scaleType: "band", data: datesList }]}
-          series={gradesList}
-          width={500}
-          height={300}
-          yAxis={[{ min: 0, max: 100 }]}
-        />
-      ) : (
-        <div>
-          <p>Most Recent Grade: {mostRecentGrade}</p>
-          <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
+  if (grades) {
+    if (grades.length > 0) {
+      return (
+        <div className="bg-gray-700 m-4 rounded-3xl p-4">
+          <h1 className="text-3xl italic">{examData.title}</h1>
+          {!alwaysShow ? (
+            <button onClick={() => setShowGraph(!showGraph)}>
+              {showGraph ? "Hide Graph" : "Show Graph"}
+            </button>
+          ) : null}
+          {showGraph && grades.length > 0 ? (
+            <BarChart
+              xAxis={[{ scaleType: "band", data: datesList }]}
+              series={gradesList}
+              width={500}
+              height={300}
+              yAxis={[{ min: 0, max: 100 }]}
+            />
+          ) : (
+            <div>
+              <p>Most Recent Grade: {mostRecentGrade}</p>
+              <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
+            </div>
+          )}
         </div>
-      )}
-    </div>
-  );
+      );
+    }
+  }
 };
 
 export default Card;
