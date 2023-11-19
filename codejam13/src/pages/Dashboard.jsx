@@ -3,6 +3,7 @@ import { myExams, getNRecentExams, getNBestExams } from "../utils/functions";
 import { getAllExams } from "../utils/firestoreFunctions";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { getGradeEmoji } from "../utils/utils";
+import DonutChart from "react-donut-chart";
 
 export default function Dashboard() {
   const [allExams, setAllExams] = useState([]);
@@ -26,7 +27,7 @@ export default function Dashboard() {
   }, [allExams]);
 
   const averagePerExamLastWeek = () => (
-    <div className="col-span-3 row-span-2 bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between">
+    <div className="col-span-3 row-span-2 bg-opacity-50 bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col justify-between">
       <h1 className="text-3xl font-bold">
         {"Your Average Score over the Last Week"}
       </h1>
@@ -153,26 +154,27 @@ export default function Dashboard() {
     <div className="col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
       <h1 className="my-3 text-3xl font-bold">{"Your Average Score"}</h1>
       <h1 className="my-3 text-3xl font-bold">
-        {(results.reduce((a, b) => a + b, 0) / results.length).toFixed(2) +
+        {(results.reduce((a, b) => a + b, 0) / results.length).toFixed(0) +
           getGradeEmoji(
-            (results.reduce((a, b) => a + b, 0) / results.length).toFixed(2)
+            (results.reduce((a, b) => a + b, 0) / results.length).toFixed(0)
           )}
       </h1>
     </div>
   );
 
   const worstScore = () => (
-    <div className="col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
+    <div className="col-span-1 row-span-1 justify-center bg-gradient-to-tr from-[#c31432] to-[#240b36] m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
       <h1 className="my-3 text-3xl font-bold">{"Your Worst Score"}</h1>
       <h1 className="my-3 text-3xl font-bold">
-        {Math.min(...results).toFixed(2) +
-          getGradeEmoji(Math.min(...results).toFixed(2))}
+        {Math.min(...results).toFixed(0) +
+          "%" +
+          getGradeEmoji(Math.min(...results).toFixed(0))}
       </h1>
     </div>
   );
 
   const bestScore = () => (
-    <div className="col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
+    <div className="bg-gradient-to-tr from-[#11998e] to-[#38ef7d] col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
       <h1 className="my-3 text-3xl font-bold">{"Your Best Score"}</h1>
       <h1 className="my-3 text-3xl font-bold">
         {nBestGrades[0] + "%" + getGradeEmoji(nBestGrades[0])}
@@ -181,7 +183,7 @@ export default function Dashboard() {
         On <i>{nBestLabels[0]}</i>
       </h2>
     </div>
-  );
+  )
 
   const numberOfAttemps = () => (
     <div className="col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
@@ -207,12 +209,12 @@ export default function Dashboard() {
       <h1 className="my-3 text-3xl font-bold">{"Weekly Report"}</h1>
       <div className="grid grid-cols-4 grid-rows-6">
         {averagePerExamLastWeek()}
-        {averageScore()}
-        {numberOfAttemps()}
-        {bestSeven()}
-        {/* {mostRecentSeven()} */}
         {bestScore()}
         {worstScore()}
+        {bestSeven()}
+        {averageScore()}
+        {numberOfAttemps()}
+        {/* {mostRecentSeven()} */}
       </div>
     </div>
   );

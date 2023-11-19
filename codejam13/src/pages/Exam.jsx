@@ -8,6 +8,8 @@ import { ArrowRightRounded, ArrowLeftRounded } from "@mui/icons-material";
 import { getGradeEmoji } from "../utils/utils";
 import QuestionCardTF from "../components/QuestionCardTF";
 import CircularProgress from "@mui/material/CircularProgress";
+import ChecklistIcon from "@mui/icons-material/Checklist";
+import BasicModal from "./BasicModal";
 
 export default function Exam() {
   function shuffleArray(array) {
@@ -36,6 +38,10 @@ export default function Exam() {
   const [questions, setQuestions] = useState([]);
 
   const [generating, setGenerating] = useState(false);
+
+  const [wrongAnswers, setWrongAnswers] = useState([]);
+
+  const [reviewing, setReviewing] = useState(false);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -94,7 +100,7 @@ export default function Exam() {
         choices.forEach((choice) => {
           cleanChoices.push(choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, ""));
         });
-        cleanChoices = shuffleArray(cleanChoices)
+        cleanChoices = shuffleArray(cleanChoices);
         if (cleanChoices.includes(answer)) {
           return [...cleanChoices];
         }
@@ -128,13 +134,26 @@ export default function Exam() {
 
   const computeGrade = () => {
     let correct = 0;
+    let newWrongAnswers = [...wrongAnswers];
     for (let i = 0; i < answers.length; i++) {
       if (options[i][answers[i]] === questions[i].answer) {
         correct++;
+      } else {
+        newWrongAnswers.push({
+          question: questions[i].question,
+          yourAnswer: options[i][answers[i]],
+          correctAnswer: questions[i].answer,
+        });
       }
+
+      setWrongAnswers(newWrongAnswers);
     }
     return (100 * correct) / answers.length;
   };
+
+  useEffect(() => {
+    console.log(wrongAnswers);
+  }, [wrongAnswers]);
 
   const examUI = () => {
     return (
@@ -245,6 +264,9 @@ export default function Exam() {
           >
             Retry
           </button>
+          <button onClick={() => setReviewing(true)} className="bg-gray-800">
+            <ChecklistIcon />
+          </button>
         </div>
       </div>
     );
@@ -256,6 +278,13 @@ export default function Exam() {
         <h1 className="m-4 font-bold ">{exam.name}</h1>
         {!showResult ? examUI() : resultUI()}
         {generating ? <CircularProgress /> : <div></div>}
+        {
+          <BasicModal
+            opened={reviewing}
+            setReviewing={setReviewing}
+            wrongAnswers={wrongAnswers}
+          />
+        }
       </div>
     );
   }
