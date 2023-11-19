@@ -18,7 +18,7 @@ export function getGradeEmoji(grade) {
     } else if (grade > 10) {
         return "😭"; // Loudly crying face emoji for very low grade
     } else {
-        return "😞"; // Super sad face emoji for extremely low grade
+        return "😭"; // Super sad face emoji for extremely low grade
     }
 }
 
