@@ -16,13 +16,27 @@ export default function MyExams() {
   const [exam, setExam] = useState(null);
   const [disabled, setDisabled] = useState(true);
 
-  function editClick() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
+  
+  
+  function editClick(){
     setDisabled(false);
   }
 
   function saveClick() {
     updateExamName(id, name);
     setDisabled(true);
+  }
+  const [modalQ, setModalQ] = useState("");
+  const [modalA, setModalA] = useState("");
+  function questionButton(data){
+    handleOpen();
+    setModalQ(data.question);
+    setModalA(data.answer);
+
   }
   useEffect(() => {
     getExam(id)
