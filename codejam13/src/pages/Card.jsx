@@ -15,22 +15,34 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
     navigate("/exam/aHC6uvngGJQTkyrAmbKM");
   };
 
+  console.log(grades)
+
   function separateGradesAndDates(gradesArray) {
-    const gradesList = gradesArray.map((item) => item.grade);
+    const gradesArr = gradesArray.map((item) => item.grade);
+    const gradesList = gradesArr.map((item) => {
+      return { data: [item] };
+    });
     const datesList = gradesArray.map((item) => item.date);
 
     return { gradesList, datesList };
   }
 
-  const { gradesList, datesList } = separateGradesAndDates(examData.grades);
-
   // State to control the visibility of the graph
 
   // Calculate the most recent grade and average grade
-  const mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
-  const averageGrade =
+  let mostRecentGrade = NaN
+  let averageGrade = NaN
+  let gradesList = NaN
+  let datesList = NaN
+  if (grades.length > 0){
+    gradesList, datesList = separateGradesAndDates(examData.grades);
+    mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
+    averageGrade =
     examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
     examData.grades.length;
+    console.log(grades)
+  }
+  console.log(gradesList, datesList)
 
   return (
     <div
@@ -49,20 +61,20 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
       <button onClick={onToggle}>
         {isGraphShown ? "Hide Graph" : "Show Graph"}
       </button>
-      {isGraphShown ? (
+      {isGraphShown && grades.length > 0 ? 
         <BarChart
-          xAxis={[{ scaleType: "band", data: datesList }]}
-          series={[{ data: gradesList }]}
+          xAxis={[{ scaleType: "band", data: datesList}]}
+          series={gradesList}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
         />
-      ) : (
+       : 
         <div>
           <p>Most Recent Grade: {mostRecentGrade}</p>
           <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
         </div>
-      )}
+      }
       <button onClick={goToExam}>Attempt Exam</button>
     </div>
   );

@@ -43,8 +43,9 @@ export const updateExamName = async (id, newName) => {
 export const addExamResult = async (id, grade) => {
   const docRef = doc(db, "exams", id);
   // const docSnap = await getDoc(docRef);
-  const result = { grade, date: Timestamp.now() };
+  const result = { grade, date: Timestamp.now().toDate().toLocaleDateString() };
   await updateDoc(docRef, { results: arrayUnion(result) });
+  return result;
 };
 
 export const addExamQuestions = async (id, newQ) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addExam } from "../utils/firestoreFunctions";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,10 @@ const CreateExam = () => {
   const [multipleChoiceQuestions, setMultipleChoiceQuestions] = useState(0);
   const [numericalQuestions, setNumericalQuestions] = useState(0);
   const [fillInTheBlankQuestions, setFillInTheBlankQuestions] = useState(0);
+
+  useEffect(() => {
+    console.log(examName);
+  }, [examName]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +39,7 @@ const CreateExam = () => {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        addExam(data)
+        addExam({ ...data, name: examName })
           .then((res) => {
             console.log(res);
             navigate(`/exam/${res}`);
