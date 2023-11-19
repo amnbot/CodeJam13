@@ -13,7 +13,7 @@ const QuestionCard = ({
   //   const shuffledChoices = choices.sort(() => Math.random() - 0.5);
 
   return (
-    <div className="bg-gray-700 focus:border-blue-500 p-4 rounded-3xl">
+    <div className="bg-black focus:border-blue-500 p-4 rounded-3xl">
       <div className="justify-between m-auto my-4">
         <h3 className="font-bold justify-start">
           Question {questionIndex + 1}
