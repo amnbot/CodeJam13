@@ -4,7 +4,10 @@ import { Container, Grid, Card } from "@mui/material";
 import GroupTemplate from "../components/GroupTemplate";
 import { useEffect } from "react";
 import RecommandationGroup from "../components/RecommandationGroup";
-import { createGroup } from "../utils/firestoreFunctions";
+import { createGroup, getGroup } from "../utils/firestoreFunctions";
+import { useState } from "react";
+import { getCurrentUser } from "../services/AuthContext";
+import { async } from "@firebase/util";
 
 export default function MyGroups() {
   const mockGroup = [
@@ -29,54 +32,39 @@ export default function MyGroups() {
       owner: "Aymen",
       id: "3",
     },
-    {
-      name: "COMP 206",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Andrew",
-      id: "4",
-    },
-    {
-      name: "COMP 360",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Aymen",
-      id: "5",
-    },
-    {
-      name: "COMP 206",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Andrew",
-      id: "6",
-    },
-    {
-      name: "COMP 360",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Aymen",
-      id: "7",
-    },
-    {
-      name: "COMP 206",
-      descriptions: "This is a description",
-      nbExams: 3,
-      owner: "Andrew",
-      id: "8",
-    },
   ];
+  const [group, setGroup] = useState([]);
 
-  const group = {
-    name: "COMP 206",
-    descriptions: "Software Systems",
-    owner: "118278086322127180520",
-    exams: [],
-  };
+  //   const group = {
+  //     name: "COMP 206",
+  //     descriptions: "Software Systems",
+  //     owner: "4EeC4MJxi9dbAdajaHEY",
+  //     exams: [],
+  //   };
+  //   const group2 = {
+  //     name: "COMP 360",
+  //     descriptions: "Algorithm Design",
+  //     owner: "ihSswhYYEZEitut5gWj9",
+  //     exams: [],
+  //   };
+
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      const list = [];
+      for (var index in user.groups) {
+        getGroup(user.groups[index]).then((group) => {
+          console.log(group);
+          list.push(group);
+          setGroup(list);
+        });
+      }
+    });
+  }, []);
 
   useEffect(() => {
     // query groups of the current user
-    createGroup(group).then((res) => console.log(res));
-  }, []);
+    console.log(group);
+  }, [group]);
 
   const addGroup = () => {
     // pop model to add group
@@ -104,7 +92,7 @@ export default function MyGroups() {
             }}
           >
             <Grid container spacing={8}>
-              {mockGroup.map((group) => (
+              {group.map((group) => (
                 <GroupTemplate key={group.id} item={group} />
               ))}
             </Grid>

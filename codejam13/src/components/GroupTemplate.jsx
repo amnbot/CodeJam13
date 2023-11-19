@@ -23,7 +23,7 @@ const GroupTemplate = (value) => {
 
   const navigateToGroup = (id) => {
     // navigate to given group
-    navigate(`/group/${group.id}`);
+    navigate(`/group/${id}`);
   };
   return (
     <Grid item key={group.id} xs={12} sm={6} md={4}>

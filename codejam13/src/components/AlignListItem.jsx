@@ -8,16 +8,21 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
 const AlignItemsList = (members) => {
+  const value = members.items;
+  if (value === undefined || !value) {
+    console.log("members is undefined");
+    return <div>loading...</div>;
+  }
   return (
     <List sx={{ width: "100%", padding: "10px", bgcolor: "background.paper" }}>
-      {members.items.map((member) => (
+      {value.items.map((member) => (
         <React.Fragment key={member.id}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
-              primary={member.name}
+              primary={value.name}
               secondary={
                 <React.Fragment>
                   <Typography
@@ -26,7 +31,7 @@ const AlignItemsList = (members) => {
                     variant="body2"
                     color="text.primary"
                   >
-                    {member.email}
+                    {value.email}
                   </Typography>
                   {" — I'll be in your neighborhood doing errands this…"}
                 </React.Fragment>
