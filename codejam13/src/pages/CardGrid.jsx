@@ -77,6 +77,7 @@ const CardGrid = ({ cardsfd }) => {
                     isGraphShown={card.name === activeCardTitle}
                     onToggle={() => handleToggle(card.name)}
                     grades={card.results}
+                    examId={card.id}
                   />
                 );
               } else {
@@ -87,6 +88,7 @@ const CardGrid = ({ cardsfd }) => {
                     isGraphShown={card.name === activeCardTitle}
                     onToggle={() => handleToggle(card.name)}
                     grades={[]}
+                    examId={card.id}
                   />
                 );
               }

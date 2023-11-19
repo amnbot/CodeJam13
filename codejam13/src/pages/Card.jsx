@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({ title, onToggle, isGraphShown, grades }) => {
+const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
   const navigate = useNavigate();
   // Replace with your actual data fetching logic
   // Sample data - replace with your actual data
@@ -12,10 +12,10 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
   });
 
   const goToExam = () => {
-    navigate("/exam/aHC6uvngGJQTkyrAmbKM");
+    navigate(`/exam/${examId}`);
   };
 
-  console.log(grades)
+  console.log(grades);
 
   function separateGradesAndDates(gradesArray) {
     const gradesArr = gradesArray.map((item) => item.grade);
@@ -30,20 +30,21 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
   // State to control the visibility of the graph
 
   // Calculate the most recent grade and average grade
-  let mostRecentGrade = NaN
-  let averageGrade = NaN
-  let gradesList = NaN
-  let datesList = NaN
-  if (grades.length > 0){
-    gradesList, datesList = separateGradesAndDates(examData.grades);
-    mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
-    averageGrade =
-    examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
-    examData.grades.length;
-    console.log(grades)
+  let mostRecentGrade = NaN;
+  let averageGrade = NaN;
+  let gradesList = [];
+  let datesList = [];
+  if (grades !== undefined) {
+    if (grades.length > 0) {
+      gradesList, (datesList = separateGradesAndDates(examData.grades));
+      mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
+      averageGrade =
+        examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
+        examData.grades.length;
+      console.log(grades);
+    }
   }
-  console.log(gradesList, datesList)
-
+  console.log(datesList);
   return (
     <div
       style={{
@@ -56,26 +57,34 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
         flexDirection: "column",
         justifyContent: "space-between",
       }}
+      className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300"
     >
       <h1>{title}</h1>
       <button onClick={onToggle}>
         {isGraphShown ? "Hide Graph" : "Show Graph"}
       </button>
-      {isGraphShown && grades.length > 0 ? 
+      {isGraphShown && grades.length > 0 ? (
         <BarChart
-          xAxis={[{ scaleType: "band", data: datesList}]}
-          series={gradesList}
+          xAxis={[{ scaleType: "band", data: datesList.datesList }]}
+          series={datesList.gradesList}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
         />
-       : 
+      ) : (
         <div>
-          <p>Most Recent Grade: {mostRecentGrade}</p>
-          <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
+          <p>
+            Most Recent Grade:{" "}
+            {mostRecentGrade ? mostRecentGrade : "No results to show"}
+          </p>
+          <p>
+            Average Grade:{" "}
+            {averageGrade ? averageGrade.toFixed(2) : "No results to show"}
+          </p>{" "}
         </div>
-      }
+      )}
       <button onClick={goToExam}>Attempt Exam</button>
+      <button onClick={() => navigate(`/my-exams/${examId}`)}>Details</button>
     </div>
   );
 };
