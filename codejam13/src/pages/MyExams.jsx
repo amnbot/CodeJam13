@@ -14,6 +14,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 const modalStyle = {
@@ -73,14 +75,25 @@ export default function MyExams() {
   if (exam) {
     return (
       <div>
-        <div>
+        <div> <label>Exam name: </label>
           <input
+            style={{
+              width: '50%',
+              padding: '10px',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              border: 'none',
+              borderBottom: '2px solid #333',
+              outline: 'none',
+              margin: '10px 0',
+              textAlign:'center'
+            }}
             defaultValue={exam.name}
             disabled={disabled}
             onChange={(e) => setName(e.target.value)}
           ></input>{" "}
-          <button onClick={editClick}>Edit name</button>
-          <button onClick={saveClick}>Save </button>
+          <button onClick={editClick}><EditIcon /></button>
+          <button onClick={saveClick}><SaveIcon /> </button>
         </div>
         <div>
           <CardSingle
@@ -125,7 +138,7 @@ export default function MyExams() {
               {modalQ}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {modalA}
+              { modalA + "."}
             </Typography>
           </Box>
         </Modal>

@@ -31,6 +31,7 @@ export const getAllExams = async () => {
   const docs = [];
   querySnapshot.forEach((doc) => {
     docs.push({ ...doc.data(), id: doc.id });
+    docs.push({ ...doc.data(), id: doc.id });
   });
 
   return docs;
@@ -78,7 +79,12 @@ export const createUser = async (user) => {
 export const getUser = async (id) => {
   const docRef = doc(db, "users", id);
   const docSnap = await getDoc(docRef);
-  return docSnap.data();
+  if (!docSnap.exists()) {
+    console.log("No such document!");
+    return null;
+  }
+  const data = docSnap.data();
+  return data;
 };
 
 const addSummary = async (summary) => {
@@ -95,21 +101,41 @@ const getSummary = async (id) => {
 
 export const createGroup = async (group) => {
   console.log("group", group);
-  //   const userRef = await addDoc(collection(db, "group"), group);
-  //   return userRef.id;
+  const userRef = await addDoc(collection(db, "group"), group);
+  // get user with group.owner as id and add group to user.groups
+  const user = await getUser(group.owner);
+  console.log("user", user);
+  const newGroups = user?.groups ?? [];
+  newGroups.push(userRef.id);
+  await updateDoc(doc(db, "users", group.owner), { groups: newGroups });
+  return userRef.id;
 };
 
 export const getGroup = async (id) => {
-  const docRef = doc(db, "groups", id);
-  const docSnap = await getDoc(docRef);
-  return docSnap.data();
+  const docRef = doc(db, "group", id);
+  try {
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      const groupWithId = { id: docSnap.id, ...data };
+      console.log("Document data:", groupWithId);
+      return groupWithId;
+    } else {
+      console.log("Document does not exist");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error getting group:", error);
+    return null;
+  }
 };
 
 export const addMember = async (id, memberId) => {
   const docRef = doc(db, "groups", id);
   const docSnap = await getDoc(docRef);
   const group = docSnap.data();
-  const members = group.members;
+  const members = group?.members ?? [];
   members.push(memberId);
   await updateDoc(docRef, { members: members });
 };
@@ -118,9 +144,8 @@ export const removeMember = async (id, memberId) => {
   const docRef = doc(db, "groups", id);
   const docSnap = await getDoc(docRef);
   const group = docSnap.data();
-  const filteredMembers = group.members.filter(
-    (member) => member.id !== memberId
-  );
+  const filteredMembers =
+    group?.members.filter((member) => member.id !== memberId) ?? [];
   await updateDoc(docRef, { members: filteredMembers });
 };
 
@@ -133,4 +158,46 @@ export const getnRecent = async (n) => {
   });
 
   return docs;
+};
+
+// given an email, return the user id
+export const getUserIdByEmail = async (email) => {
+  const usersCollection = collection(db, "users"); // Replace 'users' with your actual collection name
+
+  const q = query(usersCollection, where("email", "==", email));
+
+  try {
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("No matching documents.");
+      return null;
+    }
+
+    // Assuming you only expect one document to match the email
+    const userId = querySnapshot.docs[0].id;
+    return userId;
+  } catch (error) {
+    console.error("Error getting documents:", error);
+    return null;
+  }
+};
+
+export const getFirstNGroupsWithId = async (n) => {
+  const collectionRef = collection(db, "groups");
+
+  try {
+    const querySnapshot = await getDocs(collectionRef.limit(n));
+
+    const groups = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const groupWithId = { id: doc.id, ...data };
+      groups.push(groupWithId);
+    });
+    return groups;
+  } catch (error) {
+    console.error("Error getting groups:", error);
+    return [];
+  }
 };

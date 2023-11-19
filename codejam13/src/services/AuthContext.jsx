@@ -2,22 +2,26 @@
 import { createContext, useContext, useState } from "react";
 import { useEffect } from "react";
 import eventEmitter from "./EventEmitter";
+import { getUserIdByEmail, getUser } from "../utils/firestoreFunctions";
 
 const AuthContext = createContext();
 
-var currentUser = null;
-
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     setIsAuthenticated(
       window.sessionStorage.getItem("isAuthenticated") ?? false
     );
+    setUser(window.sessionStorage.getItem("currentUser") ?? null);
 
-    const handleEventLogin = (profile) => {
+    const handleEventLogin = async (profile) => {
       login();
-      setUser(profile);
+      await getUserIdByEmail(profile.email).then((id) => {
+        console.log(id);
+        setUser(id);
+      });
     };
     const handleEventLogout = () => {
       logout();
@@ -39,9 +43,12 @@ export const AuthProvider = ({ children }) => {
     }
   }, [isAuthenticated]);
 
-  const setUser = (profile) => {
-    currentUser = profile;
-  };
+  useEffect(() => {
+    if (user !== null) {
+      window.sessionStorage.setItem("currentUser", user);
+    }
+    console.log(user);
+  }, [user]);
 
   const login = () => {
     console.log("Login");
@@ -51,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setIsAuthenticated(false);
-    currentUser = null;
+    setUser(null);
     window.location.href = "/login";
   };
 
@@ -60,6 +67,14 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const getCurrentUser = async () => {
+  const id = window.sessionStorage.getItem("currentUser");
+  if (id !== null) {
+    return await getUser(id);
+  }
+  return null;
 };
 
 export const checkUser = () => {

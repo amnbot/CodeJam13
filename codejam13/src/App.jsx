@@ -34,7 +34,6 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/login" element={<SignIn />} exact />
-          <Route path="/" element={<Dashboard />} exact />
           <Route path="/create-exam" element={<CreateExam />} exact />
           <Route exact path="/exam/:id" element={<Exam />} />
           <Route exact path="/my-exams/:id" element={<MyExams />} />
@@ -48,6 +47,7 @@ function App() {
             element={<CardGrid cards={cardData} />}
           />
           <Route exact path="/community" element={<Community />} />
+          <Route path="/" element={<Dashboard />} exact />
           <Route path="*" element={<Navigate to="/" />} />
           {/* <Route element={<PrivateRoute />}>
             
