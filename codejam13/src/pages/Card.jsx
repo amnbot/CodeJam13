@@ -31,9 +31,9 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
 
   function getColorForGrade(grade) {
     console.log(grade)
-    if (grade > 90) {
+    if (grade > 80) {
       return "#00FF00"; // Green for high grades
-    } else if (grade > 50) {
+    } else if (grade > 55) {
       return "#FFA500"; // Orange for medium grades
     } else {
       return "#FF0000"; // Red for low grades
