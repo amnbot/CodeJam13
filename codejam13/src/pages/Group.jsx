@@ -11,20 +11,20 @@ export default function Group() {
   const mockGroup = {
     name: "COMP 360",
     members: [
-      { name: "Aymen", email: "yup" },
-      { name: "Andrew", email: "yup1" },
-      { name: "Pradyyy", email: "yup2" },
+      { name: "Aymen", email: "yup", id: "1" },
+      { name: "Andrew", email: "yup1", id: "2" },
+      { name: "Pradyyy", email: "yup2", id: "3" },
     ],
     exams: [
       { name: "Exam 1", id: "1", description: "This is a description" },
       { name: "Exam 2", id: "2", description: "This is a description" },
       { name: "Exam 3", id: "3", description: "This is a description" },
-      { name: "Exam 1", id: "1", description: "This is a description" },
-      { name: "Exam 2", id: "2", description: "This is a description" },
-      { name: "Exam 3", id: "3", description: "This is a description" },
-      { name: "Exam 1", id: "1", description: "This is a description" },
-      { name: "Exam 2", id: "2", description: "This is a description" },
-      { name: "Exam 3", id: "3", description: "This is a description" },
+      { name: "Exam 1", id: "4", description: "This is a description" },
+      { name: "Exam 2", id: "5", description: "This is a description" },
+      { name: "Exam 3", id: "6", description: "This is a description" },
+      { name: "Exam 1", id: "7", description: "This is a description" },
+      { name: "Exam 2", id: "8", description: "This is a description" },
+      { name: "Exam 3", id: "9", description: "This is a description" },
     ],
   };
 
@@ -46,14 +46,14 @@ export default function Group() {
             <Container sx={{ py: 8 }} maxWidth="md">
               <Grid container spacing={4}>
                 {group.exams.map((exam) => (
-                  <Album item={exam} />
+                  <Album key={exam.id} item={exam} />
                 ))}
               </Grid>
             </Container>
           </div>
           <div className="col-span-1">
             <h1 style={{ marginBottom: "10px" }}>Members</h1>
-            <AlignItemsList items={group.members} />
+            <AlignItemsList key={group.members.email} items={group.members} />
           </div>
         </div>
       </div>

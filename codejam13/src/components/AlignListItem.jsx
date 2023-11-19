@@ -11,7 +11,7 @@ const AlignItemsList = (members) => {
   return (
     <List sx={{ width: "100%", padding: "10px", bgcolor: "background.paper" }}>
       {members.items.map((member) => (
-        <>
+        <React.Fragment key={member.id}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -34,7 +34,7 @@ const AlignItemsList = (members) => {
             />
           </ListItem>
           <Divider variant="inset" component="li" />
-        </>
+        </React.Fragment>
       ))}
       ;
     </List>
