@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 //import {TERipple} from 'tw-elements-react';
 import Container from "react-bootstrap/Container";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -37,6 +37,8 @@ export default function MyExams() {
   const handleClose = () => setOpen(false);
   
   
+
+  const navigate = useNavigate();
   
   function editClick(){
     setDisabled(false);
@@ -98,6 +100,16 @@ export default function MyExams() {
               </Grid>
             ))}
           </Grid>
+        </div>
+
+        <div>
+        <Button onClick={() => navigate(`/exam/${id}`)} variant="contained" size="large">
+          Attempt Exam
+        </Button>
+
+        <Button onClick={() => navigate(`/my-exams`)} variant="contained" size="large">
+          Back
+        </Button>
         </div>
 
         <Modal

@@ -33,11 +33,22 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
 
   // State to control the visibility of the graph
 
+  function getColorForGrade(grade) {
+    console.log(grade)
+    if (grade > 80) {
+      return "#00FF00"; // Green for high grades
+    } else if (grade > 55) {
+      return "#FFA500"; // Orange for medium grades
+    } else {
+      return "#FF0000"; // Red for low grades
+    }
+  }
   // Calculate the most recent grade and average grade
   let mostRecentGrade = NaN;
   let averageGrade = NaN;
   let gradesList = [];
   let datesList = [];
+  let coloredGrades = [];
   if (grades !== undefined) {
     if (grades.length > 0) {
       gradesList, (datesList = separateGradesAndDates(examData.grades));
@@ -46,8 +57,14 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
         examData.grades.length;
       console.log(grades);
+      coloredGrades = datesList.gradesList.map((item) => ({
+        ...item, 
+        color: getColorForGrade(item.data[0]),
+      }));
+      console.log(coloredGrades)
     }
   }
+
   console.log(datesList);
   return (
     <div
@@ -57,7 +74,7 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
       {isGraphShown && grades.length > 0 ? (
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList.datesList }]}
-          series={datesList.gradesList}
+          series={coloredGrades}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
