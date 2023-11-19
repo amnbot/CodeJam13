@@ -20,7 +20,7 @@ export default function Dashboard() {
     // console.log(allExams);
     // console.log(getNRecentExams(allExams, 7));
     getNRecentExams(allExams, 7);
-    const { names, results } = getNBestExams(allExams, 7);
+    const { names, results } = getNBestExams(allExams, 20);
     console.log(names, results)
     setNBestGrades(results);
     setNBestLabels(names);
