@@ -98,15 +98,16 @@ export default function Exam() {
         //   choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
         // });
         var { choices, answer } = question;
+
         let cleanChoices = [];
         choices.forEach((choice) => {
           cleanChoices.push(choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, ""));
         });
-        cleanChoices = shuffleArray(cleanChoices);
+        //cleanChoices = shuffleArray(cleanChoices);
         if (cleanChoices.includes(answer)) {
-          return [...cleanChoices];
+          return shuffleArray([...cleanChoices]);
         }
-        return [...cleanChoices, answer];
+        return shuffleArray([...cleanChoices, answer]);
       });
       setOptions(newOptions);
     }
