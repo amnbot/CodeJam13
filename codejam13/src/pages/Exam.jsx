@@ -12,6 +12,8 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import BasicModal from "./BasicModal";
 import ReplayIcon from '@mui/icons-material/Replay';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ConfettiExplosion from 'react-confetti-explosion';
+
 
 export default function Exam() {
   function shuffleArray(array) {
@@ -280,6 +282,8 @@ export default function Exam() {
     return (
       <div className="mx-64">
         <h1 className="m-4 font-bold ">{exam.name}</h1>
+        {grade >= 90 ? <ConfettiExplosion style={{top: "25%", left: "25%"}} /> : null}
+        {grade >= 90 ? <ConfettiExplosion style={{top: "100%", left: "75%"}} /> : null}
         {!showResult ? examUI() : resultUI()}
         {generating ? <CircularProgress /> : <div></div>}
         {
