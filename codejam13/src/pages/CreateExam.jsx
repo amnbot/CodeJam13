@@ -81,9 +81,9 @@ const CreateExam = () => {
 
   return (
     <div className="space-x-4 space-y-4">
-      <Typography variant="h3" className="mt-4" sx={{ marginTop: "20px" }}>
+      <h1 className="mt-4 text-4xl font-bold" sx={{ marginTop: "20px" }}>
         Create Exam
-      </Typography>
+      </h1>
       <form
         onSubmit={handleSubmit}
         className="m-5 col"

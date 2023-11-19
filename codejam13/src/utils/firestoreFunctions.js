@@ -18,59 +18,7 @@ import {
 } from "firebase/firestore";
 
 export const addExam = async (exam, selectedGroup) => {
-  console.log(selectedGroup);
-  const user = await getCurrentUser();
-  // selected existing group
-  if (!selectedGroup) {
-    for (var index in user.groups) {
-      const group = user.groups[index];
-      const groupName = await getGroup(group);
-      if (groupName.name === `${user.name}'s group`) {
-        selectedGroup = group;
-        break;
-      }
-    }
-    // personal group doesn't exist
-    if (
-      selectedGroup === undefined ||
-      selectedGroup === null ||
-      selectedGroup.length === 0
-    ) {
-      const groupId = await createGroup({
-        name: `${user.name}'s group`,
-        owner: user.id,
-        members: [user.id],
-        description: "Personal group",
-        exams: [],
-      });
-      user.groups.push(selectedGroup);
-    }
-  }
-  // add exam
-  console.log("trying exam... " + exam);
   const examRef = await addDoc(collection(db, "exams"), exam);
-  console.log("examRef: " + examRef.id);
-  console.log("exam successfully updated");
-
-  // update user
-  const newExams = user?.exams ?? [];
-  newExams.push(examRef.id);
-  console.log("trying user... " + user);
-  await updateDoc(doc(db, "users", user.id), {
-    groups: user.groups,
-    exams: newExams,
-  });
-  console.log("user successfully updated");
-
-  // update group
-  console.log("trying group... " + selectedGroup);
-  const groupRef = doc(db, "group", selectedGroup);
-  const groupDoc = await getDoc(groupRef);
-  const groupData = groupDoc.data();
-  groupData.exams.push(examRef.id);
-  await updateDoc(groupRef, { exams: groupData.exams });
-  console.log("group successfully updated");
-
   return examRef.id;
 };
 

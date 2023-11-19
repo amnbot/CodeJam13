@@ -150,7 +150,7 @@ export default function Dashboard() {
   );
 
   const averageScore = () => (
-    <div className="col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
+    <div className="col-span-1 row-span-1 justify-center bg-gradient-to-tr from-[#000046] to-[#1CB5E0] m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
       <h1 className="my-3 text-3xl font-bold">{"Your Average Score"}</h1>
       <h1 className="my-3 text-3xl font-bold">
         {(results.reduce((a, b) => a + b, 0) / results.length).toFixed(0) +
@@ -185,8 +185,8 @@ export default function Dashboard() {
   )
 
   const numberOfAttemps = () => (
-    <div className="col-span-1 row-span-1 justify-center bg-gray-800 m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
-      <h1 className="my-3 text-3xl font-bold">{"Number of Attempts"}</h1>
+    <div className="col-span-1 row-span-1 justify-center bg-gradient-to-tr from-[#fc4a1a] to-[#f7b733] m-[1rem] p-[1rem] rounded-3xl min-h-[250px] flex flex-col">
+      <h1 className="my-3 text-3xl font-bold">{"Exams taken"}</h1>
       <h1 className="my-3 text-3xl font-bold">{results.length}</h1>
     </div>
   );

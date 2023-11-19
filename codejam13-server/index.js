@@ -20,7 +20,7 @@ app.post("/create-exam", async (req, res) => {
   const { body } = req;
   console.log("Input: ", body); //body will contain the parsed body data
   const exam = await createQuestions(body);
-  console.log(exam)
+  console.log(exam);
   res.json(exam);
 });
 
@@ -31,13 +31,28 @@ app.listen(port, () => {
 
 // Testing
 
-const mockGenMCQ = `[
-    ["Which desert covers large parts of Algeria, Chad, Egypt, Libya, Mali, Mauritania, Morocco, Niger, Western Sahara, Sudan, and Tunisia?", "Sahara", ["Kalahari", "Gobi", "Atacama", "Namib"]],
-    ["What is the total area covered by the Sahara desert?", "9 million square kilometres (3,500,000 sq mi)", ["5 million square kilometres", "7 million square kilometres", "10 million square kilometres", "12 million square kilometres"]],
-    ["What percentage of Africa does the Sahara desert cover?", "31%", ["10%", "20%", "40%", "50%"]],
-    ["Which country does not have any part of its territory covered by the Sahara desert?", "Kenya", ["Mali", "Chad", "Algeria", "Libya"]],
-    ["What is the largest desert in the world?", "Sahara", ["Arabian", "Antarctic", "Gobi", "Namib"]]
-  ]]`;
+const mockGenMCQ = ` [
+  [
+      "What event marked the beginning of World War II?",
+      "Nazi Germany's invasion of Poland",
+      [
+          "The end of World War I",
+          "The economic crisis of the Great Depression",
+          "The creation of the United Nations",
+          "The bombing of Hiroshima and Nagasaki"
+      ]
+  ],
+  [
+      "How many people are estimated to have died during World War II?",
+      "60 to 80 million",
+      [
+          "10 to 20 million",
+          "30 to 40 million",
+          "50 to 60 million",
+          "80 to 100 million"
+      ]
+  ]
+]`;
 
 const mockParseMcq = parseMCQ(mockGenMCQ);
 // console.log(JSON.stringify(mockParseMcq, null, 2));
@@ -45,4 +60,4 @@ const mockParseMcq = parseMCQ(mockGenMCQ);
 const questions = `[["How far away in light-years from the center of the galaxy is the Sun located", "25 000"]]`;
 
 const formattedQuestions = parseNum(questions);
-console.log(JSON.stringify(formattedQuestions, null, 2));
+console.log(JSON.stringify(mockParseMcq, null, 2));
