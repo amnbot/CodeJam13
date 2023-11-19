@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import {
+  deleteExam,
   getAllExams,
   getExam,
   updateExamName,
@@ -16,6 +17,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const modalStyle = {
@@ -118,13 +122,15 @@ export default function MyExams() {
         </div>
 
         <div>
-        <Button onClick={() => navigate(`/exam/${id}`)} variant="contained" size="large">
-          Attempt Exam
-        </Button>
+        <button onClick={() => navigate(`/exam/${id}`)} >
+          <HistoryEduIcon />
+        </button>
 
-        <Button onClick={() => navigate(`/my-exams`)} variant="contained" size="large">
-          Back
-        </Button>
+        <button onClick={() => navigate(`/my-exams`)}>
+          <ArrowBackIcon />
+        </button>
+ 
+        <button onClick= {() => {deleteExam(id);navigate(`/my-exams`) }}> <DeleteIcon /></button>
         </div>
 
         <Modal
