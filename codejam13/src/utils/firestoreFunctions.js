@@ -83,3 +83,34 @@ const getSummary = async (id) => {
 
   return docSnap.data();
 };
+
+export const createGroup = async (group) => {
+  console.log("group", group);
+  //   const userRef = await addDoc(collection(db, "group"), group);
+  //   return userRef.id;
+};
+
+export const getGroup = async (id) => {
+  const docRef = doc(db, "groups", id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
+};
+
+export const addMember = async (id, memberId) => {
+  const docRef = doc(db, "groups", id);
+  const docSnap = await getDoc(docRef);
+  const group = docSnap.data();
+  const members = group.members;
+  members.push(memberId);
+  await updateDoc(docRef, { members: members });
+};
+
+export const removeMember = async (id, memberId) => {
+  const docRef = doc(db, "groups", id);
+  const docSnap = await getDoc(docRef);
+  const group = docSnap.data();
+  const filteredMembers = group.members.filter(
+    (member) => member.id !== memberId
+  );
+  await updateDoc(docRef, { members: filteredMembers });
+};

@@ -44,8 +44,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = () => {
+    console.log("Login");
     setIsAuthenticated(true);
-    window.location.href = "/";
+    //window.location.href = "/";
   };
 
   const logout = () => {

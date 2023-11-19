@@ -33,24 +33,25 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/login" element={<SignIn />} exact />
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Dashboard />} exact />
-            <Route path="/create-exam" element={<CreateExam exact />} />
-            <Route exact path="/exam/:id" element={<Exam />} />
-            <Route exact path="/my-exams/:id" element={<MyExams />} />
-            <Route exact path="/my-exams" element={<CardGrid />} />
-            <Route path="/my-groups" element={<MyGroups />} exact />
-            <Route exact path="/group/:id" element={<Group />} />
-            <Route exact path="/my-group/:id" element={<MyGroups />} />
-            <Route
-              exact
-              path="/my-groups"
-              element={<CardGrid cards={cardData} />}
-            />
-            <Route exact path="/community" element={<Community />} />
-          </Route>
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Dashboard />} exact />
+          <Route path="/create-exam" element={<CreateExam />} exact />
+          <Route exact path="/exam/:id" element={<Exam />} />
+          <Route exact path="/my-exams/:id" element={<MyExams />} />
+          <Route exact path="/my-exams" element={<CardGrid />} />
+          <Route path="/my-groups" element={<MyGroups />} exact />
+          <Route exact path="/group/:id" element={<Group />} />
+          <Route exact path="/my-group/:id" element={<MyGroups />} />
+          <Route
+            exact
+            path="/my-groups"
+            element={<CardGrid cards={cardData} />}
+          />
+          <Route exact path="/community" element={<Community />} />
           <Route path="*" element={<Navigate to="/" />} />
+          {/* <Route element={<PrivateRoute />}>
+            
+          </Route> */}
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
         {/* <Footer /> */}
       </Router>

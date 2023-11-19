@@ -16,17 +16,22 @@ import { useNavigate } from "react-router-dom";
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const GroupTemplate = (value) => {
+const RecommandationGroup = (value) => {
   const group = value.item;
 
   const navigate = useNavigate();
+
+  const join = (id) => {
+    // join the group
+    navigateToGroup(id);
+  };
 
   const navigateToGroup = (id) => {
     // navigate to given group
     navigate(`/group/${group.id}`);
   };
   return (
-    <Grid item key={group.id} xs={12} sm={6} md={4}>
+    <Grid item key={group.id} sm={6}>
       <Card
         sx={{
           height: "100%",
@@ -49,15 +54,12 @@ const GroupTemplate = (value) => {
           <Typography>{group.description}</Typography>
         </CardContent>
         <CardActions>
-          <Button onClick={() => navigateToGroup(group.id)} size="small">
-            View
-          </Button>
-          <Button onClick={() => navigateToGroup(group.id)} size="small">
-            Delete
+          <Button onClick={() => join(group.id)} size="small">
+            Join
           </Button>
         </CardActions>
       </Card>
     </Grid>
   );
 };
-export default GroupTemplate;
+export default RecommandationGroup;

@@ -3,6 +3,8 @@ import React from "react";
 import { Container, Grid, Card } from "@mui/material";
 import GroupTemplate from "../components/GroupTemplate";
 import { useEffect } from "react";
+import RecommandationGroup from "../components/RecommandationGroup";
+import { createGroup } from "../utils/firestoreFunctions";
 
 export default function MyGroups() {
   const mockGroup = [
@@ -63,8 +65,17 @@ export default function MyGroups() {
       id: "8",
     },
   ];
+
+  const group = {
+    name: "COMP 206",
+    descriptions: "Software Systems",
+    owner: "118278086322127180520",
+    exams: [],
+  };
+
   useEffect(() => {
     // query groups of the current user
+    createGroup(group).then((res) => console.log(res));
   }, []);
 
   const addGroup = () => {
@@ -122,9 +133,9 @@ export default function MyGroups() {
                 py: 0,
               }}
             >
-              <Grid container spacing={8}>
+              <Grid container spacing={4}>
                 {mockGroup.map((group) => (
-                  <GroupTemplate key={group.id} item={group} />
+                  <RecommandationGroup key={group.id} item={group} />
                 ))}
               </Grid>
             </Container>
