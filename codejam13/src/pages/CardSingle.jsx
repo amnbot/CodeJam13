@@ -71,6 +71,32 @@ const Card = ({ title, grades, alwaysShow = false }) => {
               width={500}
               height={300}
               yAxis={[{ min: 0, max: 100 }]}
+              sx={{
+                //change left yAxis label styles
+               "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
+                strokeWidth:"0.4",
+                fill:"white"
+               },
+               // change all labels fontFamily shown on both xAxis and yAxis
+               "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                   fontFamily: "Roboto",
+                },
+                // change bottom label styles
+                "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
+                    strokeWidth:"0.5",
+                    fill:"white"
+                 },
+                  // bottomAxis Line Styles
+                 "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                  stroke:"white",
+                  strokeWidth:0.4
+                 },
+                 // leftAxis Line Styles
+                 "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                  stroke:"white",
+                  strokeWidth:0.4
+                 }
+              }}
             />
           ) : (
             <div>

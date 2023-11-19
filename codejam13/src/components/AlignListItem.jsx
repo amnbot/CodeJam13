@@ -15,14 +15,14 @@ const AlignItemsList = (members) => {
   }
   return (
     <List sx={{ width: "100%", padding: "10px", bgcolor: "background.paper" }}>
-      {value.items.map((member) => (
-        <React.Fragment key={member.id}>
+      {value.map((member, index) => (
+        <React.Fragment key={index}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
-              primary={value.name}
+              primary={member.name}
               secondary={
                 <React.Fragment>
                   <Typography
@@ -31,7 +31,7 @@ const AlignItemsList = (members) => {
                     variant="body2"
                     color="text.primary"
                   >
-                    {value.email}
+                    {member.email}
                   </Typography>
                   {" — I'll be in your neighborhood doing errands this…"}
                 </React.Fragment>
