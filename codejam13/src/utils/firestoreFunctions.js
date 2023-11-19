@@ -11,6 +11,8 @@ import {
   doc,
   Timestamp,
   getDocs,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -114,3 +116,16 @@ export const removeMember = async (id, memberId) => {
   );
   await updateDoc(docRef, { members: filteredMembers });
 };
+
+export const getnRecent = async(n) => {
+  docs = [];
+  const querySnapshot = await getDocs(collection(db, "exams"), limit(n));
+
+  querySnapshot.forEach((doc) =>{
+    docs.push({...doc.data(), id: doc.id});
+  });
+
+  return docs;
+
+}
+
