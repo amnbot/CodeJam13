@@ -3,7 +3,6 @@ import { myExams, getNRecentExams, getNBestExams } from "../utils/functions";
 import { getAllExams } from "../utils/firestoreFunctions";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { getGradeEmoji } from "../utils/utils";
-import DonutChart from "react-donut-chart";
 
 export default function Dashboard() {
   const [allExams, setAllExams] = useState([]);
