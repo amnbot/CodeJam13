@@ -12,6 +12,8 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { addMember } from "../utils/firestoreFunctions";
+import { getCurrentUser } from "../services/AuthContext";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -27,8 +29,13 @@ const RecommandationGroup = (value) => {
   };
 
   const navigateToGroup = (id) => {
+    console.log("navigateToGroup");
     // navigate to given group
-    navigate(`/group/${group.id}`);
+    getCurrentUser().then((user) => {
+      addMember(id, user.id).then((res) => {
+        navigate(`/group/${id}`);
+      });
+    });
   };
   return (
     <Grid item key={group.id} sm={6}>
