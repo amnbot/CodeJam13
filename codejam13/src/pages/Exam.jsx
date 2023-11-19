@@ -74,7 +74,7 @@ export default function Exam() {
       <div>
         <div className="grid grid-cols-5 text-left">
           <div className="col-span-1">
-            <div className="grid grid-cols-2 gap-y-4 gap-x-0 text-left">
+            <div className="text-left">
               {exam.multipleChoice.map((question, index) => (
                 <div key={index}>
                   <button onClick={() => setCurrQuestionIndex(index)}>
@@ -107,13 +107,15 @@ export default function Exam() {
               questionIndex={currQuestionIndex}
             />
             <div className="m-5 space-x-5 justify-evenly flex">
-              <button onClick={() => navigate('/my-exams')}>
+              <button
+              className="bg-gray-800"
+               onClick={() => navigate('/my-exams')}>
                 Quit
               </button>
               <button
                 disabled={answers.includes(-1)}
                 onClick={handleSubmit}
-                className=""
+                className="bg-gray-800"
               >
                 Submit
               </button>
@@ -133,6 +135,9 @@ export default function Exam() {
           grades={exam.results}
           title={"Your grades"}
         />
+        <button onClick={() => navigate('/my-exams')}>
+                Quit
+              </button>
         <button
           onClick={() => {
             navigate(0);
@@ -147,7 +152,7 @@ export default function Exam() {
   if (exam && options.length > 0) {
     return (
       <div className="mx-64">
-        <h1 className="m-4">{exam.name}</h1>
+        <h1 className="m-4 font-bold ">{exam.name}</h1>
         {!showResult ? examUI() : resultUI()}
       </div>
     );
