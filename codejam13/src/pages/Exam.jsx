@@ -7,9 +7,19 @@ import { useNavigate } from "react-router-dom";
 import { ArrowRightRounded, ArrowLeftRounded } from "@mui/icons-material";
 import { getGradeEmoji } from "../utils/utils";
 import QuestionCardTF from "../components/QuestionCardTF";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Exam() {
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      // Generate a random index from 0 to i
+      const j = Math.floor(Math.random() * (i + 1));
+
+      // Swap elements at indices i and j
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -80,14 +90,13 @@ export default function Exam() {
         //   choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
         // });
         var { choices, answer } = question;
-        const cleanChoices = [];
-        choices.forEach((choice) =>{
-          
-          cleanChoices.push(choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, ''));
-
+        let cleanChoices = [];
+        choices.forEach((choice) => {
+          cleanChoices.push(choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, ""));
         });
+        cleanChoices = shuffleArray(cleanChoices)
         if (cleanChoices.includes(answer)) {
-          return [...cleanChoices]
+          return [...cleanChoices];
         }
         return [...cleanChoices, answer];
       });
