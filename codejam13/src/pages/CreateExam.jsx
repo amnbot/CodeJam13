@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { addExam } from "../utils/firestoreFunctions";
 import { useNavigate } from "react-router-dom";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { getGroup } from "../utils/firestoreFunctions";
+// import { getGroup } from "../utils/firestoreFunctions";
 import { getCurrentUser } from "../services/AuthContext";
 import { Typography } from "@mui/material";
 
@@ -16,32 +16,32 @@ const CreateExam = () => {
   const [multipleChoiceQuestions, setMultipleChoiceQuestions] = useState(0);
   const [numericalQuestions, setNumericalQuestions] = useState(0);
   const [fillInTheBlankQuestions, setFillInTheBlankQuestions] = useState(0);
-  const [groups, setGroups] = useState([]);
+  // const [groups, setGroups] = useState([]);
   const [selectedGroup, setGroup] = useState(null);
 
   useEffect(() => {
-    getCurrentUser().then((user) => {
-      const list = [];
-      for (var index in user?.groups ?? []) {
-        getGroup(user.groups[index]).then((group) => {
-          list.push(group);
-          setGroups(list);
-        });
-      }
-    });
+    // getCurrentUser().then((user) => {
+    //   const list = [];
+    //   for (var index in user?.groups ?? []) {
+    //     getGroup(user.groups[index]).then((group) => {
+    //       list.push(group);
+    //       setGroups(list);
+    //     });
+    //   }
+    // });
   }, []);
 
   useEffect(() => {
     console.log(examName);
   }, [examName]);
 
-  useEffect(() => {
-    console.log(groups);
-  }, [groups]);
+  // useEffect(() => {
+  //   console.log(groups);
+  // }, [groups]);
 
-  const handleChange = (event) => {
-    setGroup(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setGroup(event.target.value);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const CreateExam = () => {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        addExam({ ...data, name: examName }, selectedGroup)
+        addExam({ ...data, name: examName })
           .then((res) => {
             console.log(res);
             navigate(`/exam/${res}`);
@@ -124,7 +124,7 @@ const CreateExam = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter your input here (lecture notes, lecture transcript, ...)"
             ></textarea>
-            <FormControl fullWidth sx={{ marginTop: "30px" }}>
+            {/* <FormControl fullWidth sx={{ marginTop: "30px" }}>
               <InputLabel
                 id="demo-simple-select-label"
                 sx={{ fontSize: "20px" }}
@@ -145,7 +145,7 @@ const CreateExam = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+            </FormControl> */}
           </div>
 
           <div className="col-span-2 my-4 space-y-4 text-left">
