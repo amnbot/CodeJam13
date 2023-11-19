@@ -32,14 +32,17 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
   // Calculate the most recent grade and average grade
   let mostRecentGrade = NaN
   let averageGrade = NaN
+  let gradesList = []
+  let datesList = []
   if (grades.length > 0){
-    let {gradesList, datesList} = separateGradesAndDates(examData.grades);
+    gradesList, datesList = separateGradesAndDates(examData.grades);
     mostRecentGrade = examData.grades[examData.grades.length - 1].grade;
     averageGrade =
     examData.grades.reduce((acc, curr) => acc + curr.grade, 0) /
     examData.grades.length;
     console.log(grades)
   }
+  console.log(datesList)
 
   return (
     <div
@@ -58,7 +61,7 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
       <button onClick={onToggle}>
         {isGraphShown ? "Hide Graph" : "Show Graph"}
       </button>
-      {grades.length > 0 && isGraphShown ? 
+      {isGraphShown && grades.length > 0 ? 
         <BarChart
           xAxis={[{ scaleType: "band", data: datesList.datesList}]}
           series={datesList.gradesList}
