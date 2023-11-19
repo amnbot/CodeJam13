@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({ title, onToggle, isGraphShown, grades }) => {
+const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
   const navigate = useNavigate();
   // Replace with your actual data fetching logic
   // Sample data - replace with your actual data
@@ -12,7 +12,7 @@ const Card = ({ title, onToggle, isGraphShown, grades }) => {
   });
 
   const goToExam = () => {
-    navigate("/exam/aHC6uvngGJQTkyrAmbKM");
+    navigate(`/exam/${examId}`);
   };
 
   console.log(grades);

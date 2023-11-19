@@ -28,7 +28,7 @@ export const getAllExams = async () => {
   const querySnapshot = await getDocs(collection(db, "exams"));
   const docs = [];
   querySnapshot.forEach((doc) => {
-    docs.push(doc.data());
+    docs.push({...doc.data(), id: doc.id});
   });
 
   return docs;
