@@ -5,6 +5,7 @@ import QuestionCard from "../components/Question";
 import CardSingle from "./CardSingle";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightRounded, ArrowLeftRounded } from "@mui/icons-material";
+import { getGradeEmoji } from "../utils/utils";
 
 export default function Exam() {
   const navigate = useNavigate();
@@ -16,9 +17,9 @@ export default function Exam() {
   const [answers, setAnswers] = useState([]);
 
   const [options, setOptions] = useState([]);
-  const [grade, setGrade] = useState(-1);
+  const [grade, setGrade] = useState(70);
 
-  const [showResult, setShowResult] = useState(false);
+  const [showResult, setShowResult] = useState(true);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -108,8 +109,9 @@ export default function Exam() {
             />
             <div className="m-5 space-x-5 justify-evenly flex">
               <button
-              className="bg-gray-800"
-               onClick={() => navigate('/my-exams')}>
+                className="bg-gray-800"
+                onClick={() => navigate("/my-exams")}
+              >
                 Quit
               </button>
               <button
@@ -128,23 +130,26 @@ export default function Exam() {
 
   const resultUI = () => {
     return (
-      <div>
-        <h2 className="text-3xl">Grade: {grade}%</h2>
+      <div className="m-4">
+        <h2 className="text-3xl my-4">Grade: {grade}% {getGradeEmoji(grade)}</h2>
         <CardSingle
           alwaysShow={true}
           grades={exam.results}
           title={"Your grades"}
         />
-        <button onClick={() => navigate('/my-exams')}>
-                Quit
-              </button>
-        <button
-          onClick={() => {
-            navigate(0);
-          }}
-        >
-          Retry
-        </button>
+        <div className="my-5 space-x-4">
+          <button className="bg-gray-800" onClick={() => navigate("/my-exams")}>
+            Quit
+          </button>
+          <button
+            className="bg-gray-800"
+            onClick={() => {
+              navigate(0);
+            }}
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
   };
