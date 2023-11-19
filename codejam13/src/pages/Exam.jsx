@@ -253,7 +253,7 @@ export default function Exam() {
         <CardSingle
           alwaysShow={true}
           grades={exam.results}
-          title={"Your grades"}
+          title={"Your Past Grades"}
         />
         <div className="my-5 space-x-4">
           <button className="bg-gray-800" onClick={() => navigate("/my-exams")}>
@@ -267,9 +267,9 @@ export default function Exam() {
           >
             <ReplayIcon />
           </button>
-          <button onClick={() => setReviewing(true)} className="bg-gray-800">
+          {grade < 100 && <button onClick={() => setReviewing(true)} className="bg-gray-800">
             <ChecklistIcon />
-          </button>
+          </button>}
         </div>
       </div>
     );
