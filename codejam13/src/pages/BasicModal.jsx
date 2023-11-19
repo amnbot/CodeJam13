@@ -15,6 +15,8 @@ const style = {
   p: 4,
   background: "rgb(30,41,59)",
   borderRadius: 8,
+  maxHeight: '80vh',
+  overflow: 'scroll'
 };
 
 export default function BasicModal({opened, setReviewing, wrongAnswers}) {
@@ -35,7 +37,7 @@ export default function BasicModal({opened, setReviewing, wrongAnswers}) {
           <h1 className='font-bold text-xl text-center'>Your mistakes</h1>
           {wrongAnswers.map((wrongAnswer, index) => (
             <div className='my-4'>
-              <h2 className='font-bold text-lg'>{index + 1}. {wrongAnswer.question}</h2>
+              <h2 className='font-bold text-lg'>{wrongAnswer.questionNumber}. {wrongAnswer.question}</h2>
               <h3 className='font-bold text-lg text-red-400'>Your answer: {wrongAnswer.yourAnswer} ❌</h3>
               <h3 className='font-bold text-lg text-green-400'>Correct answer: {wrongAnswer.correctAnswer} ✅</h3>
             </div>

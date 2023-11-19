@@ -10,6 +10,8 @@ import QuestionCardTF from "../components/QuestionCardTF";
 import CircularProgress from "@mui/material/CircularProgress";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import BasicModal from "./BasicModal";
+import ReplayIcon from '@mui/icons-material/Replay';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 export default function Exam() {
   function shuffleArray(array) {
@@ -143,6 +145,7 @@ export default function Exam() {
           question: questions[i].question,
           yourAnswer: options[i][answers[i]],
           correctAnswer: questions[i].answer,
+          questionNumber: i + 1,
         });
       }
 
@@ -225,7 +228,7 @@ export default function Exam() {
                 className="bg-gray-800"
                 onClick={() => navigate("/my-exams")}
               >
-                Quit
+                <ExitToAppIcon />
               </button>
               <button
                 disabled={answers.includes(-1)}
@@ -254,7 +257,7 @@ export default function Exam() {
         />
         <div className="my-5 space-x-4">
           <button className="bg-gray-800" onClick={() => navigate("/my-exams")}>
-            Quit
+            <ExitToAppIcon />
           </button>
           <button
             className="bg-gray-800"
@@ -262,7 +265,7 @@ export default function Exam() {
               navigate(0);
             }}
           >
-            Retry
+            <ReplayIcon />
           </button>
           <button onClick={() => setReviewing(true)} className="bg-gray-800">
             <ChecklistIcon />
