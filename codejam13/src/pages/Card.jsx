@@ -57,6 +57,7 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
         flexDirection: "column",
         justifyContent: "space-between",
       }}
+      className="hover:cursor-pointer hover:scale-110 ease-in-out transition-all duration-300"
     >
       <h1>{title}</h1>
       <button onClick={onToggle}>
@@ -69,15 +70,21 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
-          
         />
       ) : (
         <div>
-          <p>Most Recent Grade: {mostRecentGrade}</p>
-          <p>Average Grade: {averageGrade.toFixed(2)}</p>{" "}
+          <p>
+            Most Recent Grade:{" "}
+            {mostRecentGrade ? mostRecentGrade : "No results to show"}
+          </p>
+          <p>
+            Average Grade:{" "}
+            {averageGrade ? averageGrade.toFixed(2) : "No results to show"}
+          </p>{" "}
         </div>
       )}
       <button onClick={goToExam}>Attempt Exam</button>
+      <button onClick={() => navigate(`/my-exams/${examId}`)}>Details</button>
     </div>
   );
 };
