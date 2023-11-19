@@ -13,6 +13,7 @@ import {
   getDocs,
   orderBy,
   limit,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const addExam = async (exam) => {
@@ -26,6 +27,12 @@ export const getExam = async (id) => {
   return docSnap.data();
 };
 
+export const deleteExam = async(id) =>{
+  const docRef = doc(db, "exams", id);
+  
+  await deleteDoc(docRef);
+  return id;
+}
 export const getAllExams = async () => {
   const querySnapshot = await getDocs(collection(db, "exams"));
   const docs = [];
