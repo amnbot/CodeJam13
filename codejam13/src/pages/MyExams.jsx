@@ -106,6 +106,10 @@ export default function MyExams() {
         <Button onClick={() => navigate(`/exam/${id}`)} variant="contained" size="large">
           Attempt Exam
         </Button>
+
+        <Button onClick={() => navigate(`/my-exams`)} variant="contained" size="large">
+          Back
+        </Button>
         </div>
 
         <Modal
