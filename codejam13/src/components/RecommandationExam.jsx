@@ -12,34 +12,33 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { addMember } from "../utils/firestoreFunctions";
+import { addMemberExam } from "../utils/firestoreFunctions";
 import { getCurrentUser } from "../services/AuthContext";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const RecommandationGroup = (value) => {
-  const group = value.item;
-  console.log(group);
+const RecommandationExam = (value) => {
+  const exam = value.item;
 
   const navigate = useNavigate();
 
   const join = (id) => {
-    // join the group
-    navigateToGroup(id);
+    // join the exam
+    navigateToExam(id);
   };
 
-  const navigateToGroup = (id) => {
-    console.log("navigateToGroup");
-    // navigate to given group
+  const navigateToExam = (id) => {
+    console.log("navigateToExam");
+    // navigate to given exam
     getCurrentUser().then((user) => {
-      addMember(id, user.id).then((res) => {
-        navigate(`/group/${id}`);
+      addMemberExam(id, user.id).then((res) => {
+        navigate(`/exam/${id}`);
       });
     });
   };
   return (
-    <Grid item key={group.id} sm={6}>
+    <Grid item key={exam.id} sm={6}>
       <Card
         sx={{
           height: "100%",
@@ -57,12 +56,12 @@ const RecommandationGroup = (value) => {
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
-            {group.name}
+            {exam.name}
           </Typography>
-          <Typography>{group.description}</Typography>
+          <Typography>{exam.description}</Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: "center" }}>
-          <Button onClick={() => join(group.id)} size="large">
+          <Button onClick={() => join(exam.id)} size="large">
             Join
           </Button>
         </CardActions>
@@ -70,4 +69,4 @@ const RecommandationGroup = (value) => {
     </Grid>
   );
 };
-export default RecommandationGroup;
+export default RecommandationExam;

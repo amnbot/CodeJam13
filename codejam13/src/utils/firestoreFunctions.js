@@ -197,6 +197,15 @@ export const getGroup = async (id) => {
     return null;
   }
 };
+export const addMemberExam = async (id, memberId) => {
+  // get user
+  const user = await getUser(memberId);
+  const newExams = user?.exams ?? [];
+  newExams.push(id);
+
+  // update user
+  await updateDoc(doc(db, "users", memberId), { exams: newExams });
+};
 
 export const addMember = async (id, memberId) => {
   console.log("user id", memberId);
