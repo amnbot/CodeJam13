@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const QuestionCard = ({
+const QuestionCardMCQ = ({
   questionData,
   setAnswers,
   questionIndex,
@@ -46,4 +46,4 @@ const QuestionCard = ({
   );
 };
 
-export default QuestionCard;
+export default QuestionCardMCQ;

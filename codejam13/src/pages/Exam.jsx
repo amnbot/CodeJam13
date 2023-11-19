@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { addExamResult, getExam } from "../utils/firestoreFunctions";
-import QuestionCard from "../components/Question";
+import QuestionCardMCQ from "../components/Question";
 import CardSingle from "./CardSingle";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightRounded, ArrowLeftRounded } from "@mui/icons-material";
@@ -100,7 +100,7 @@ export default function Exam() {
             </div>
           </div>
           <div className="col-span-4">
-            <QuestionCard
+            <QuestionCardMCQ
               questionData={exam.multipleChoice[currQuestionIndex]}
               options={options[currQuestionIndex]}
               setAnswers={setAnswers}
