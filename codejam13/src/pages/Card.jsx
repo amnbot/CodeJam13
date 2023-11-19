@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useNavigate } from "react-router-dom";
+import { getGradeEmoji } from "../utils/utils";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -36,11 +37,11 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
   function getColorForGrade(grade) {
     console.log(grade)
     if (grade > 80) {
-      return "#00FF00"; // Green for high grades
+      return "#79cc41"; // Green for high grades
     } else if (grade > 55) {
-      return "#FFA500"; // Orange for medium grades
+      return "#cc8441"; // Orange for medium grades
     } else {
-      return "#FF0000"; // Red for low grades
+      return "#cc5641"; // Red for low grades
     }
   }
   // Calculate the most recent grade and average grade
@@ -80,14 +81,14 @@ const Card = ({ title, onToggle, isGraphShown, grades, examId }) => {
           yAxis={[{ min: 0, max: 100 }]}
         />
       ) : (
-        <div>
+        <div className="text-xl font-semibold ">
           <p>
             Most Recent Grade:{" "}
-            {mostRecentGrade ? mostRecentGrade : "No results to show"}
+            {mostRecentGrade ? mostRecentGrade + getGradeEmoji(mostRecentGrade) : "No results to show"}
           </p>
           <p>
             Average Grade:{" "}
-            {averageGrade ? averageGrade.toFixed(2) : "No results to show"}
+            {averageGrade ? averageGrade.toFixed(2) + getGradeEmoji(averageGrade) : "No results to show"}
           </p>{" "}
           <p>Attempts: {grades.length}</p>
         </div>
