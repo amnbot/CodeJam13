@@ -76,11 +76,20 @@ export default function Exam() {
       console.log(questions);
       setAnswers(Array(questions.length).fill(-1));
       const newOptions = questions.map((question) => {
+        // question.choices.forEach((choice) =>{
+        //   choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+        // });
         var { choices, answer } = question;
-        if (choices.includes(answer)) {
-          return [...choices]
+        const cleanChoices = [];
+        choices.forEach((choice) =>{
+          
+          cleanChoices.push(choice.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, ''));
+
+        });
+        if (cleanChoices.includes(answer)) {
+          return [...cleanChoices]
         }
-        return [...choices, answer];
+        return [...cleanChoices, answer];
       });
       setOptions(newOptions);
     }
