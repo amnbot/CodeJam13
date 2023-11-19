@@ -34,7 +34,6 @@ export default function SwipeableTemporaryDrawer() {
 
   useEffect(() => {
     const handleEvent = () => {
-      console.log(isOpen);
       setState({ ...state, ["left"]: !isOpen });
       isOpen = !isOpen;
     };
@@ -49,24 +48,24 @@ export default function SwipeableTemporaryDrawer() {
 
   const navigate = useNavigate();
 
+  const closeSideBar = () => {
+    setState({ ...state, ["left"]: false });
+    isOpen = false;
+  };
+
   const handleNavigation = (page) => {
-    navigate(links[pages.indexOf(page)]);
+    closeSideBar();
+    const link = links[pages.indexOf(page)];
+    navigate(link);
   };
 
   const handleNavigationGroup = (page) => {
-    navigate(secondLinks[secondPages.indexOf(page)]);
+    closeSideBar();
+    const link = secondLinks[secondPages.indexOf(page)];
+    navigate(link);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log("yup");
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
     setState({ ...state, [anchor]: open });
   };
 
@@ -123,11 +122,7 @@ export default function SwipeableTemporaryDrawer() {
           <ArrowBackIosIcon />
         </IconButton>
       </Box>
-      <Box
-        sx={{ width: "300px", marginTop: "20px" }}
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
-      >
+      <Box sx={{ width: "300px", marginTop: "20px" }}>
         <List>
           {pages.map((text, index) => (
             <ListItem key={text}>
@@ -154,7 +149,7 @@ export default function SwipeableTemporaryDrawer() {
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  onClick={() => handleNavigation(text)}
+                  onClick={() => handleNavigationGroup(text)}
                 />
               </ListItemButton>
             </ListItem>
