@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 const modalStyle = {
@@ -118,13 +120,13 @@ export default function MyExams() {
         </div>
 
         <div>
-        <Button onClick={() => navigate(`/exam/${id}`)} variant="contained" size="large">
-          Attempt Exam
-        </Button>
+        <button onClick={() => navigate(`/exam/${id}`)} >
+          <HistoryEduIcon />
+        </button>
 
-        <Button onClick={() => navigate(`/my-exams`)} variant="contained" size="large">
-          Back
-        </Button>
+        <button onClick={() => navigate(`/my-exams`)}>
+          <ArrowBackIcon />
+        </button>
         </div>
 
         <Modal
