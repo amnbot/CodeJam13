@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { addExam } from "../utils/firestoreFunctions";
 import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 const CreateExam = () => {
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ const CreateExam = () => {
 
   return (
     <div className="space-x-4 space-y-4">
+      <Typography variant="h3" className="mt-4">Create Exam</Typography>
       <form onSubmit={handleSubmit} className="m-5 col">
         <div className="grid grid-cols-3 gap-y-4 gap-4 text-left">
           <div className="col-span-3">

@@ -5,7 +5,7 @@ const openai = new OpenAI({
 });
 
 const generateQuestions = async (prompt, input) => {
-  console.log("generating...")
+  console.log("generating...");
   const chatCompletion = await openai.chat.completions.create({
     messages: [
       { role: "system", content: prompt },
@@ -35,7 +35,7 @@ Output Format: A json object in the form:
         ]
 } */
 const parseMCQ = (inputString) => {
-    // Replace double quotes with single quotes to ensure proper parsing
+  // Replace double quotes with single quotes to ensure proper parsing
   const formattedString = inputString.replace(/"/g, "'");
 
   // Use regular expressions to extract data from the string
@@ -52,17 +52,45 @@ const parseMCQ = (inputString) => {
   };
 
   return result;
-}
+};
 
-const parseSingle = (inputString) => {
-  const formattedString = inputString.map(qa => ({
-    question: qa[0],
-    answer: qa[1]
-  }));
+const parseTF = (inputString) => {
+  // Replace double quotes with single quotes to ensure proper parsing
+  const formattedString = inputString.replace(/"/g, "'");
 
-  return formattedString;
+  // Use regular expressions to extract data from the string
+  const regex = /\['(.*?)', '(.*?)'\]/g;
+  const matches = formattedString.matchAll(regex);
 
-}
+  // Map the matches to the desired JSON format
+  const result = {
+    trueOrFalse: Array.from(matches, (match) => ({
+      question: match[1],
+      answer: match[2],
+    })),
+  };
+
+  return result;
+};
+
+const parseNum = (inputString) => {
+  // Replace double quotes with single quotes to ensure proper parsing
+  const formattedString = inputString.replace(/"/g, "'");
+
+  // Use regular expressions to extract data from the string
+  const regex = /\['(.*?)', '(.*?)'\]/g;
+  const matches = formattedString.matchAll(regex);
+
+  // Map the matches to the desired JSON format
+  const result = {
+    numerical: Array.from(matches, (match) => ({
+      question: match[1],
+      answer: match[2],
+    })),
+  };
+
+  return result;
+};
 
 /*
 This is the format of a list of questions:
@@ -86,5 +114,4 @@ Output Format: A json object in the form:
         ]
 } */
 
-
-module.exports = { generateQuestions, parseMCQ, parseSingle };
+module.exports = { generateQuestions, parseMCQ, parseTF, parseNum };
