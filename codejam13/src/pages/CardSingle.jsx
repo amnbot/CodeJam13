@@ -37,6 +37,9 @@ const Card = ({ title, grades, alwaysShow = false }) => {
         examData.grades.length;
     }
   }
+
+  console.log(gradesList, datesList)
+  
   if (grades) {
     if (grades.length > 0) {
       return (
@@ -49,8 +52,8 @@ const Card = ({ title, grades, alwaysShow = false }) => {
           ) : null}
           {showGraph && grades.length > 0 ? (
             <BarChart
-              xAxis={[{ scaleType: "band", data: datesList }]}
-              series={gradesList}
+              xAxis={[{ scaleType: "band", data: datesList.datesList }]}
+              series={datesList.gradesList}
               width={500}
               height={300}
               yAxis={[{ min: 0, max: 100 }]}
