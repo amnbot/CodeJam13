@@ -1,3 +1,4 @@
+import { getCurrentUser } from "../services/AuthContext.jsx";
 import { db } from "./firestoreConfigSetter.js";
 import {
   collection,
@@ -16,23 +17,83 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-export const addExam = async (exam) => {
+export const addExam = async (exam, selectedGroup) => {
+  console.log(selectedGroup);
+  const user = await getCurrentUser();
+  // selected existing group
+  if (!selectedGroup) {
+    for (var index in user.groups) {
+      const group = user.groups[index];
+      const groupName = await getGroup(group);
+      if (groupName.name === `${user.name}'s group`) {
+        selectedGroup = group;
+        break;
+      }
+    }
+    // personal group doesn't exist
+    if (
+      selectedGroup === undefined ||
+      selectedGroup === null ||
+      selectedGroup.length === 0
+    ) {
+      const groupId = await createGroup({
+        name: `${user.name}'s group`,
+        owner: user.id,
+        members: [user.id],
+        description: "Personal group",
+        exams: [],
+      });
+      user.groups.push(selectedGroup);
+    }
+  }
+  // add exam
+  console.log("trying exam... " + exam);
   const examRef = await addDoc(collection(db, "exams"), exam);
+  console.log("examRef: " + examRef.id);
+  console.log("exam successfully updated");
+
+  // update user
+  const newExams = user?.exams ?? [];
+  newExams.push(examRef.id);
+  console.log("trying user... " + user);
+  await updateDoc(doc(db, "users", user.id), {
+    groups: user.groups,
+    exams: newExams,
+  });
+  console.log("user successfully updated");
+
+  // update group
+  console.log("trying group... " + selectedGroup);
+  const groupRef = doc(db, "group", selectedGroup);
+  const groupDoc = await getDoc(groupRef);
+  const groupData = groupDoc.data();
+  groupData.exams.push(examRef.id);
+  await updateDoc(groupRef, { exams: groupData.exams });
+  console.log("group successfully updated");
+
   return examRef.id;
 };
 
 export const getExam = async (id) => {
   const docRef = doc(db, "exams", id);
   const docSnap = await getDoc(docRef);
-  return docSnap.data();
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    const dataWithId = { id: docSnap.id, ...data };
+    return dataWithId;
+  } else {
+    // Handle the case where the document does not exist
+    console.log(`Document with ID ${id} does not exist.`);
+    return null; // You can return null or throw an error, depending on your requirements
+  }
 };
 
-export const deleteExam = async(id) =>{
+export const deleteExam = async (id) => {
   const docRef = doc(db, "exams", id);
-  
+
   await deleteDoc(docRef);
   return id;
-}
+};
 export const getAllExams = async () => {
   const querySnapshot = await getDocs(collection(db, "exams"));
   const docs = [];
@@ -145,24 +206,29 @@ export const addMember = async (id, memberId) => {
   const group = docSnap.data();
   const newMembers = group?.members ?? [];
   console.log("newMembers : " + newMembers + " vs " + memberId);
-  if (newMembers.find((member) => member === memberId)) {
+  if (
+    newMembers.length === 0 ||
+    newMembers.find((member) => member === memberId)
+  ) {
     return;
-  }
-  newMembers.push(memberId);
+  } else {
+    newMembers.push(memberId);
 
-  // update group
-  await updateDoc(docRef, { members: newMembers });
-  // get user
-  const user = await getUser(memberId);
-  const newGroups = user?.groups ?? [];
-  console.log("newGroups : " + newGroups + " vs " + id);
-  if (newGroups.find((group) => group === id)) {
-    return;
-  }
-  newGroups.push(id);
+    // update group
+    await updateDoc(docRef, { members: newMembers });
+    // get user
+    const user = await getUser(memberId);
+    const newGroups = user?.groups ?? [];
+    console.log("newGroups : " + newGroups + " vs " + id);
+    if (newGroups.length === 0 || newGroups.find((group) => group === id)) {
+      return;
+    } else {
+      newGroups.push(id);
 
-  // update user
-  await updateDoc(doc(db, "users", memberId), { groups: newGroups });
+      // update user
+      await updateDoc(doc(db, "users", memberId), { groups: newGroups });
+    }
+  }
 };
 
 export const removeMember = async (id, memberId) => {

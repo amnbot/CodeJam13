@@ -11,27 +11,8 @@ import { getUsersByIds } from "../utils/firestoreFunctions";
 export default function Group() {
   let { id } = useParams();
 
-  //   const mockGroup = {
-  //     name: "COMP 360",
-  //     members: [
-  //       { name: "Aymen", email: "yup", id: "1" },
-  //       { name: "Andrew", email: "yup1", id: "2" },
-  //       { name: "Pradyyy", email: "yup2", id: "3" },
-  //     ],
-  //     exams: [
-  //       { name: "Exam 1", id: "1", description: "This is a description" },
-  //       { name: "Exam 2", id: "2", description: "This is a description" },
-  //       { name: "Exam 3", id: "3", description: "This is a description" },
-  //       { name: "Exam 1", id: "4", description: "This is a description" },
-  //       { name: "Exam 2", id: "5", description: "This is a description" },
-  //       { name: "Exam 3", id: "6", description: "This is a description" },
-  //       { name: "Exam 1", id: "7", description: "This is a description" },
-  //       { name: "Exam 2", id: "8", description: "This is a description" },
-  //       { name: "Exam 3", id: "9", description: "This is a description" },
-  //     ],
-  //   };
-
   const [group, setGroup] = useState(null);
+  const [exam, setExam] = useState([]);
   const [members, setMembers] = useState([]);
 
   const addExam = (exam) => {
@@ -45,14 +26,30 @@ export default function Group() {
       getUsersByIds(group.members).then((res) => {
         setMembers(res);
       });
+      const list = [];
+      for (const id in group.exams) {
+        getExam(group.exams[id]).then((res) => {
+          list.push(res);
+          setExam(list);
+        });
+      }
     }
   }, [group]);
+
+  useEffect(() => {
+    console.log(members);
+  }, [members]);
+
+  useEffect(() => {
+    console.log(exam);
+  }, [exam]);
 
   useEffect(() => {
     getGroup(id).then((res) => {
       setGroup(res);
     });
   }, []);
+
   if (group) {
     return (
       <div style={{ display: "block" }}>
@@ -76,9 +73,9 @@ export default function Group() {
 
             <Container sx={{ py: 8 }} maxWidth="md">
               <Grid container spacing={4}>
-                {group.exams.map((exam) => (
-                  <Album key={exam.id} item={exam} />
-                ))}
+                {exam?.map((exam, index) => (
+                  <Album key={index} item={exam} />
+                )) ?? <div>loading... </div>}
               </Grid>
             </Container>
           </div>

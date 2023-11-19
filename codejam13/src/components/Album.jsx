@@ -8,14 +8,26 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 const Album = (value) => {
   const exam = value.item;
+
+  if (!exam) {
+    return;
+  }
+
+  const navigate = useNavigate();
+
+  const goToExam = (id) => {
+    // navigate to given group
+    navigate(`/exam/${id}`);
+  };
   return (
-    <Grid item key={exam} xs={12} sm={6} md={4}>
+    <Grid item key={exam.id} xs={12} sm={6} md={4}>
       <Card
         sx={{
           height: "100%",
@@ -38,7 +50,9 @@ const Album = (value) => {
           <Typography>{exam.description}</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Try</Button>
+          <Button size="small" onClick={() => goToExam(exam.id)}>
+            Try
+          </Button>
           <Button size="small">View</Button>
         </CardActions>
       </Card>
