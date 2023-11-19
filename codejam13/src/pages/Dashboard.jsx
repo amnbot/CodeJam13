@@ -31,8 +31,8 @@ export default function Dashboard() {
         </h1>
 
         <BarChart
-          xAxis={[{ scaleType: "band", data: names ?? [] }]}
-          series={[{ data: results ?? [] }]}
+          xAxis={[{ scaleType: "band", data: names}]}
+          series={[{ data: results}]}
           width={500}
           height={300}
           yAxis={[{ min: 0, max: 100 }]}
